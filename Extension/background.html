@@ -1,0 +1,147 @@
+<html>
+
+<script>
+
+var drag_enabled = 0;
+var ad_number = 0;
+var wk = 0;
+var wk2 = 0;
+
+function change_drag_enable(current){
+  if(current == 1){
+    return 0;
+  } else {
+    return 1;
+  }
+}
+
+function request_create(){
+//  if(ad_number<2){
+    ad_number++;
+    chrome.tabs.getSelected(null, function(tab) {
+      chrome.tabs.sendRequest(tab.id, {action: "create"});
+    });
+//  } else {
+//  console.log('created too many ads');
+//  }
+}
+
+function request_drag(){
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.sendRequest(tab.id, {action: "drag", enabled: drag_enabled});
+    drag_enabled = change_drag_enable(drag_enabled);
+  });
+  
+}
+
+function request_remove_all(){
+  if(drag_enabled == 1){
+    request_drag();
+    chrome.tabs.getSelected(null, function(tab) {
+      chrome.tabs.sendRequest(tab.id, {action: "remove_all"});
+    });
+  } else if(ad_number == 0){
+  
+  } else {
+    chrome.tabs.getSelected(null, function(tab) {
+      chrome.tabs.sendRequest(tab.id, {action: "remove_all"});
+    });
+  }
+}
+
+function save_ad_positions(data){
+  var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
+  db.transaction( function(tx){
+    tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(id unique,site, top, left)');
+    tx.executeSql('DELETE FROM site_positions WHERE site = "' + data.url + '"');
+    for(i=0; i<data.positions.length ;i++){
+      tx.executeSql('INSERT INTO site_positions(site, top, left) VALUES ("' + data.url + '", "'+ data.positions[i].top +'", "'+ data.positions[i].left +'")');
+    }
+  });
+}
+
+function startup_info(url){
+  var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
+  db.transaction( function(tx){
+    tx.executeSql('SELECT * FROM site_positions WHERE site = "'+ url +'"',[], function(tx, results){
+      wk = new Array();
+      for(i=0; i< results.rows.length; i++){
+        wk2 = {top: results.rows.item(i).top, left: results.rows.item(i).left}; 
+        wk.push ( wk2 );        
+        ad_number++;
+      }
+      startup_ads(wk);     
+    });
+  });
+}
+
+function startup_ads(positions){
+  chrome.tabs.getSelected(null, function(tab) {
+    chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions});
+  });
+  localStorage.views = Number(localStorage.views) + positions.length;
+}
+
+function set_icon(){
+  var canvas = document.createElement('canvas'),ctx;
+  canvas.height = 19;
+  canvas.width = 19;
+  ctx = canvas.getContext('2d');
+  
+  ctx.fillStyle = "#00FF00"; 
+  ctx.fillRect(0,0,19,19);
+  
+  ctx.fillStyle = "#FF6600";
+  ctx.beginPath();
+  ctx.arc(9.5,9.5,8,0,Math.PI*2);
+  ctx.closePath();
+  ctx.fill();
+    
+  ctx.fillStyle = "#0000FF";
+  ctx.font = "13px Arial"
+  ctx.fillText("A",5,14);
+  
+  var imageData = ctx.getImageData(0,0,19,19);
+  chrome.browserAction.setIcon({
+    imageData: imageData
+  });
+
+}
+
+function data_send_check(){
+  var d = new Date();
+  if(localStorage.lastSent!= d.getMonth()){
+    localStorage.lastSent = d.getMonth();
+    //send data to server
+  }
+}
+
+        //End Functions and begin stuff loaded on page start
+
+chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
+  if(request.action == "create"){ //request from popup
+    request_create();
+    sendResponse({});
+  } else if(request.action == "drag"){    //request from popup
+    request_drag();
+    sendResponse({});
+  } else if(request.action == "remove_all"){ //request from popup
+    request_remove_all();
+    sendResponse({});
+  } else if(request.action == "save_ad_positions"){
+    save_ad_positions(request);
+    sendResponse({});
+  } else if(request.action == "request_startup_info"){
+    startup_info(request.url)
+    sendResponse({});
+  } else{}
+});
+
+set_icon();
+data_send_check();
+
+</script>
+</head>
+<body>
+</body>
+</html>

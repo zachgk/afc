@@ -1,0 +1,43 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.HideOutput=0
+Compilator.LogType=0
+DefaultCPIndex=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+[Project tree]
+advertisements
+	+Folder
+		popup.html
+		background.html
+		drag.js
+		manifest.json
+		options.html
+[Open project files]
+0=manifest.json
+1=options.html
+2=popup.html
+3=background.html
+4=drag.js
+[Selected Project Files]
+Main=
+Selected=background.html
+[manifest.json]
+TopLine=1
+Caret=32,22
+[options.html]
+TopLine=5
+Caret=28,22
+[popup.html]
+TopLine=1
+Caret=63,22
+[background.html]
+TopLine=113
+Caret=100,12
+[drag.js]
+TopLine=12
+Caret=27,54

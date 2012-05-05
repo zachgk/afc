@@ -1,0 +1,24 @@
+<html>
+
+<script>
+function create(){
+  chrome.extension.sendRequest({action: "create"});
+}
+function drag(){
+  chrome.extension.sendRequest({action: "drag"});
+}
+
+function remove_all(){
+  chrome.extension.sendRequest({action: "remove_all"});
+}
+</script>
+
+<button id='create' onclick="create()">Create Ad</button>
+<button id='drag' onclick="drag()">Toggle Dragging</button>
+<button id='remove_all' onclick="remove_all()">Remove All Ads</button>
+
+
+
+</html>
+
+

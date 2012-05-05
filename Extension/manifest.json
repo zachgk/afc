@@ -1,0 +1,23 @@
+// JavaScript Document
+
+{
+  "name": "Ads for Charity",
+  "version":"1.0",
+  "description":"Extension that puts adds on your computer for charity",
+  "permissions": [
+    "tabs", "http://*/*"
+  ],  
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      "css": ["jquery-ui-1.8.16.custom.css"],
+      "js": [ "jquery-1.6.2.min.js", "jquery-ui-1.8.16.custom.min.js", "drag.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background_page": "background.html",
+  "options_page": "options.html"
+}
