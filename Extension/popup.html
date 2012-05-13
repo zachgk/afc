@@ -4,18 +4,21 @@
 function create(){
   chrome.extension.sendRequest({action: "create"});
 }
-function drag(){
-  chrome.extension.sendRequest({action: "drag"});
+
+function select(){
+  chrome.tabs.create({"url":"http://ads4charity.org/charities"});
 }
 
-function remove_all(){
-  chrome.extension.sendRequest({action: "remove_all"});
+function help(){
+  chrome.tabs.create({"url":"http://ads4charity.org/faq-page"});
 }
+
 </script>
 
 <button id='create' onclick="create()">Create Ad</button>
-<button id='drag' onclick="drag()">Toggle Dragging</button>
-<button id='remove_all' onclick="remove_all()">Remove All Ads</button>
+<button id='select' onclick="select()">Select Charities</button>
+<button id='help' onclick="help()">Help</button>
+
 
 
 
