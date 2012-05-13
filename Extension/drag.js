@@ -39,12 +39,14 @@ function create_ad(){
 }
 
 function start_ad(top,left, callback) {
-    $('body').append("<embed class='adsforcharity_ad adsforcharity_ad_new' src='http://ads4charity.org/ad.php'>");
+    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'><embed src='http://ads4charity.org/ad.php'></div>");
 		var ad_css = {
 		"position": "absolute",
 		"left":left,
 		"top": top,
 		"z-index":10000,
+		"padding": '10px',
+		"background": "red"
 		};
 	$('.adsforcharity_ad_new').css(ad_css).removeClass('adsforcharity_ad_new');
 		if(callback) callback();
