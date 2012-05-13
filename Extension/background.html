@@ -49,6 +49,10 @@ function request_remove_all(){
   }
 }
 
+function request_remove(){
+  
+}
+
 function save_ad_positions(data){
   var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
@@ -127,6 +131,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "remove_all"){ //request from popup
     request_remove_all();
+    sendResponse({});
+  } else if(request.action == "remove"){ //request from popup
+    request_remove();
     sendResponse({});
   } else if(request.action == "save_ad_positions"){
     save_ad_positions(request);
