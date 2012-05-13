@@ -29,8 +29,6 @@ embed body {
 
 .adsforcharity_ad_new {
   position: absolute;
-  left: 100px;
-  top: 100px;
   z-index:10000;
   background: red;
 }
