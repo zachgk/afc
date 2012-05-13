@@ -13,9 +13,12 @@ function enable_drag(){
   });
 }
 
-function disable_drag(){
-  save_ad_positions();
-  $('.adsforcharity_ad').draggable('destroy');
+function enable_remove(){
+  $('.a4c_remove').click(function(){
+    console.log('remove');
+    $(this).parent().parent().remove();//this does not work
+	save_ad_positions();
+  });
 }
 
 function save_ad_positions(){
@@ -25,15 +28,6 @@ function save_ad_positions(){
     wk.push( wk2 );
   });
   chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": window.location.host});
-}
-
-function toggle_drag(enabled){
-  console.log(enabled);
-  if(enabled){
-    disable_drag();
-  } else {
-    enable_drag();
-  }
 }
 
 function create_ad() {
@@ -52,6 +46,7 @@ function start_ad(top,left) {
 		});
 		
 		enable_drag();
+		enable_remove();
 }
 
 function startup(){
