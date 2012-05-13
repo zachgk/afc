@@ -28,3 +28,7 @@ embed body {
   z-index:10000;
   background: red;
 }
+
+.adsforcharity_ad .a4c_move{
+  cursor: move
+}
