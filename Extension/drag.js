@@ -6,7 +6,10 @@ var wk2 = 0;
 function enable_drag(){
   $('.adsforcharity_ad').draggable({
     "containment":"body",
-	"handle":".a4c_move"
+	"handle":".a4c_move",
+	"stop":function(event, ui){
+	  save_ad_positions();
+	}
   });
 }
 
@@ -16,7 +19,7 @@ function disable_drag(){
 }
 
 function save_ad_positions(){
-  alert('ad positions saved');
+  console.log('ad positions saved');
   wk = new Array();
   $('.adsforcharity_ad').each(function(){
     wk2 ={"top": $(this).css('top') ,"left": $(this).css('left')};
