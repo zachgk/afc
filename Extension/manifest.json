@@ -5,14 +5,14 @@
   "version":"1.0",
   "description":"Extension that puts adds on your computer for charity",
   "permissions": [
-    "tabs", "http://*/*", "https://*/*"
+    "tabs", "<all_urls>"
   ],  
   "browser_action": {
     "default_popup": "popup.html"
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*","https://*/*"],
+      "matches": ["<all_urls>"],
       "css": ["jquery-ui-1.8.16.custom.css"],
       "js": [ "jquery-1.6.2.min.js", "jquery-ui-1.8.16.custom.min.js", "drag.js"],
       "run_at": "document_end"
