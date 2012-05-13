@@ -41,12 +41,12 @@ function create_ad() {
 
 
 function start_ad(top,left) {
-    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'><embed src='http://ads4charity.org/ad.php'><div class='panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span><br>Options</div></div>");
+    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'><embed src='http://ads4charity.org/ad.php'><div class='panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span><br><span class='a4c_options'>Options</span></div></div>");
 
 		$(".adsforcharity_ad").hover(function(){
-			$(this).find(".panel").fadeIn();
+			$(this).find(".panel").animate({width: 'toggle'});
 		},function(){
-			$(this).find(".panel").fadeOut();
+			$(this).find(".panel").animate({width: 'toggle'});
 		});
 		
 		enable_drag();
