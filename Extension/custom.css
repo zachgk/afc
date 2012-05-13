@@ -4,17 +4,23 @@ embed body {
 
 .adsforcharity_ad {
   width: 125px;
+  height: 112px;
+}
+
+.adsforcharity_ad span{
+  padding-left: 5px;
 }
 
 .adsforcharity_ad embed {
   margin: -21px -8px;
+  width: 133px;
 }
 
 .panel {
   display: none;
   margin-left: 124px;
   margin-top: -125px;
-  padding: 5px 0px 5px 21px;
+  padding: 5px 0px 5px 0px;
   margin-bottom: -52px;
   background-color: gray;
   width: 76px;
