@@ -8,9 +8,15 @@
     function change_charity(){
       localStorage.charity = document.getElementById('change_charity_select').value;
     }  
+	
+	chrome.tabs.create({"url":"http://ads4charity.org/charities"});
+	chrome.tabs.getCurrent(function(tab){
+	  console.log(tab);
+	  chrome.tabs.remove(tab.id);
+	});
   </script>
   </head>
-  <body>
+  <!--<body>
   
   <center>
   <h2>Ads for Charity Options</h2>
@@ -23,5 +29,5 @@
   </select>
   <center>
   
-  </body>
+  </body>-->
 </html>
