@@ -38,7 +38,7 @@ function create_ad(){
   });
 }
 
-function start_ad(top,left, callback){
+/*function start_ad(top,left, callback){
   $.post('http://afc.zachkimberg.com/ad.php',{},function(data, textStatus, jqXHR){
     $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'>"+ data +"</div>");
 	var ad_css = {
@@ -50,6 +50,17 @@ function start_ad(top,left, callback){
 	$('.adsforcharity_ad_new').css(ad_css).removeClass('adsforcharity_ad_new');
 	if(callback) callback();
   })
+}*/
+
+function start_ad(top,left, callback) {
+    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'><embed src='http://afc.zachkimberg.com/ad.php'></div>");
+		var ad_css = {
+		"position": "absolute",
+		"left":left,
+		"top": top,
+		"z-index":10000,
+		};
+	$('.adsforcharity_ad_new').css(ad_css).removeClass('adsforcharity_ad_new');
 }
 
 function startup(){
