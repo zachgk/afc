@@ -33,9 +33,7 @@ function toggle_drag(enabled){
 }
 
 function create_ad(){
-  start_ad("100px","100px", function(){
-	enable_drag();
-  });
+  start_ad("100px","100px");
 }
 
 
@@ -49,14 +47,15 @@ function start_ad(top,left, callback) {
 		"z-index":10000,
 		"background": "red"
 		};
-	$('.adsforcharity_ad_new').css(ad_css).removeClass('adsforcharity_ad_new');
-		if(callback) callback();
+	$('embed body').css("margin", "0px");
+	$('.adsforcharity_ad_new').css(ad_css);
 		$(".adsforcharity_ad").hover(function(){
 			console.log("hovering");
 			$(this).find(".panel").fadeIn();
 		},function(){
 			$(this).find(".panel").fadeOut();
 		});
+	$('.adsforcharity_ad_new').removeClass('adsforcharity_ad_new');
 }
 
 function startup(){
