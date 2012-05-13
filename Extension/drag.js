@@ -32,30 +32,20 @@ function toggle_drag(enabled){
   }
 }
 
-function create_ad(){
+function create_ad() {
   start_ad("100px","100px");
 }
 
 
 
-function start_ad(top,left, callback) {
-    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'><div class='panel' style='display:none;margin-left: 170px;margin-top: 0px; padding: 5px 0px 5px 21px; margin-bottom: -52px;background: gray;'><span class='a4f_remove'>Remove</span><br><span class='a4c_move'>Move</span><br>Options</div><embed src='http://ads4charity.org/ad.php'></div>");
-		var ad_css = {
-		"position": "absolute",
-		"left":left,
-		"top": top,
-		"z-index":10000,
-		"background": "red"
-		};
-	$('embed body').css("margin", "0px");
-	$('.adsforcharity_ad_new').css(ad_css);
+function start_ad(top,left) {
+    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new'><embed src='http://ads4charity.org/ad.php'><div class='panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span><br>Options</div></div>");
+
 		$(".adsforcharity_ad").hover(function(){
-			console.log("hovering");
 			$(this).find(".panel").fadeIn();
 		},function(){
 			$(this).find(".panel").fadeOut();
 		});
-	$('.adsforcharity_ad_new').removeClass('adsforcharity_ad_new');
 }
 
 function startup(){
