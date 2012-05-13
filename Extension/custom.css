@@ -1,0 +1,30 @@
+embed body {
+  margin: 0px;
+}
+
+.adsforcharity_ad {
+  width: 125px;
+}
+
+.adsforcharity_ad embed {
+  margin: -21px -8px;
+}
+
+.panel {
+  display: none;
+  margin-left: 124px;
+  margin-top: -125px;
+  padding: 5px 0px 5px 21px;
+  margin-bottom: -52px;
+  background-color: gray;
+  width: 76px;
+  display: none;
+}
+
+.adsforcharity_ad_new {
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  z-index:10000;
+  background: red;
+}
