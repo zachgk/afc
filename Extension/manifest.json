@@ -13,8 +13,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["jquery-ui-1.8.16.custom.css", "custom.css", "icons.css"],
-      "js": [ "jquery-1.6.2.min.js", "jquery-ui-1.8.16.custom.min.js", "drag.js"],
+      "css": ["jquery/jquery-ui-1.8.16.custom.css", "css/custom.css", "css/icons.css"],
+      "js": [ "jquery/jquery-1.6.2.min.js", "jquery/jquery-ui-1.8.16.custom.min.js", "drag.js"],
       "run_at": "document_end"
     }
   ],
