@@ -14,7 +14,6 @@ function enable_drag(){
 
 function enable_remove(){
   $('.a4c_remove').click(function(){
-    console.log('remove');
     $(this).parent().parent().fadeOut().remove();
 	save_ad_positions();
   });

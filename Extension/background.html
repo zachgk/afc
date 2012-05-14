@@ -58,7 +58,6 @@ function startup_ads(positions){
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions});
   });
-  localStorage.views = Number(localStorage.views) + positions.length;
 }
 
 function set_icon(){
@@ -87,14 +86,6 @@ function set_icon(){
 
 }
 
-function data_send_check(){
-  var d = new Date();
-  if(localStorage.lastSent!= d.getMonth()){
-    localStorage.lastSent = d.getMonth();
-    //send data to server
-  }
-}
-
         //End Functions and begin stuff loaded on page start
 
 chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
@@ -120,7 +111,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 });
 
 set_icon();
-data_send_check();
 site_interactions();
 
 
