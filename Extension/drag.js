@@ -16,7 +16,7 @@ function enable_drag(){
 function enable_remove(){
   $('.a4c_remove').click(function(){
     console.log('remove');
-    $(this).parent().parent().remove();
+    $(this).parent().parent().fadeOut().remove();
 	save_ad_positions();
   });
 }
@@ -37,10 +37,9 @@ function create_ad() {
 
 
 function start_ad(top,left) {
-    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new' style='top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php'><div class='panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
-
+    $('body').append("<div class='adsforcharity_ad adsforcharity_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php'><div class='panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
+		$(".adsforcharity_ad_new").delay(200).fadeIn(); //prevents the flash of the new ad
 		$(".adsforcharity_ad").hover(function(){
-			console.log("sliding out");
 			$(this).find(".panel").css({
 				"opacity":"1",
 				"-webkit-transition":"left 0.25s ease-in-out",

@@ -18,16 +18,24 @@ button:hover {
 }
 </style>
 <script>
+function close_popup() {
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.update(tab.id, { selected: true } )
+	});
+}
 function create(){
   chrome.extension.sendRequest({action: "create"});
+  close_popup();  
 }
 
 function select(){
   chrome.tabs.create({"url":"http://ads4charity.org/charities"});
+  close_popup();  
 }
 
 function help(){
   chrome.tabs.create({"url":"http://ads4charity.org/faq-page"});
+  close_popup();  
 }
 
 </script>
@@ -35,10 +43,6 @@ function help(){
 <button id='create' onclick="create()">Create Ad</button>
 <button id='select' onclick="select()">Select a Charity</button>
 <button id='help' onclick="help()">Help</button>
-
-
-
-
 </html>
 
 

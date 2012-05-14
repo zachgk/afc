@@ -2,18 +2,9 @@
 
 <script>
 
-var drag_enabled = 0;
 var ad_number = 0;
 var wk = 0;
 var wk2 = 0;
-
-function change_drag_enable(current){
-  if(current == 1){
-    return 0;
-  } else {
-    return 1;
-  }
-}
 
 function request_create(){
 //  if(ad_number<2){
@@ -26,30 +17,10 @@ function request_create(){
 //  }
 }
 
-function request_drag(){
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.sendRequest(tab.id, {action: "drag", enabled: drag_enabled});
-    drag_enabled = change_drag_enable(drag_enabled);
-  });
-  
-}
 
-function request_remove_all(){
-  if(drag_enabled == 1){
-    request_drag();
-    chrome.tabs.getSelected(null, function(tab) {
-      chrome.tabs.sendRequest(tab.id, {action: "remove_all"});
-    });
-  } else if(ad_number == 0){
-  
-  } else {
-    chrome.tabs.getSelected(null, function(tab) {
-      chrome.tabs.sendRequest(tab.id, {action: "remove_all"});
-    });
-  }
-}
 
-function save_ad_positions(data){
+function save_ad_positions(data) {
+console.log(data);
   var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(id unique,site, top, left)');
@@ -60,7 +31,7 @@ function save_ad_positions(data){
   });
 }
 
-function site_interactions(){
+function site_interactions() {
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 	  if(changeInfo && changeInfo.url && changeInfo.url.indexOf("http://ads4charity.org")!= -1){
 		chrome.tabs.executeScript(tabId, {"file":"site_interactions.js"});
@@ -68,7 +39,7 @@ function site_interactions(){
 	});
 }
 
-function startup_info(url){
+function startup_info(url) {
   var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('SELECT * FROM site_positions WHERE site = "'+ url +'"',[], function(tx, results){
@@ -132,9 +103,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "drag"){    //request from popup
     request_drag();
-    sendResponse({});
-  } else if(request.action == "remove_all"){ //request from popup
-    request_remove_all();
     sendResponse({});
   } else if(request.action == "remove"){ //request from popup
     request_remove();
