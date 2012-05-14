@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var wk ,wk2, ad_number=1;
+var wk ,wk2, ad_number=1, charity_selection;
 
 function enable_drag(){
   $('.a4c_ad').draggable({
@@ -36,7 +36,7 @@ function create_ad() {
 
 function start_ad(top,left) {
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
-    $('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
+    $('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
 		$(".a4c_ad_new").delay(200).fadeIn(); //prevents the flash of the new ad
 		$(".a4c_ad").hover(function(){
 			$(this).find(".a4c_panel").css({
@@ -83,4 +83,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else {}
 });
 
+chrome.extension.sendRequest({action: "get_charity"}, function(response){
+  charity_selection = response.charity;
+});
 startup();
