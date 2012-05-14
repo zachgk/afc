@@ -11,6 +11,19 @@ embed body {
   padding-left: 18px;
 }
 
+
+.adsforcharity_ad span:hover{
+  text-decoration: underline;
+}
+
+.a4c_remove {
+  cursor: pointer;
+}
+
+.adsforcharity_ad .a4c_move{
+  cursor: move;
+}
+
 .adsforcharity_ad embed {
   margin: -21px -8px;
   width: 133px;
@@ -35,8 +48,4 @@ embed body {
   position: absolute;
   z-index:10000;
   background: transparent;
-}
-
-.adsforcharity_ad .a4c_move{
-  cursor: move;
 }
