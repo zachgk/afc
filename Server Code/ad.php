@@ -12,6 +12,23 @@
    else{
     window.addEventListener('DOMContentLoaded',pw_load,false);
     window.addEventListener('load',pw_load,false);}})();
-</script><!-- End Project Wonderful Ad Box Loader --><!-- Project Wonderful Ad Box Code -->
-<div id="pw_adbox_60904_4_0">
-  &nbsp;</div>
+</script>
+
+<?php switch($_GET["ad_number"]) {
+	case 1:
+		print '<div id="pw_adbox_60904_4_0"></div>';
+		break;
+	case 2:
+		print '<div id="pw_adbox_63814_4_0"></div>';
+		break;	
+	case 3:
+		print '<div id="pw_adbox_60904_4_0"></div>';
+		break;
+	case 4:
+		print '<div id="pw_adbox_63814_4_0"></div>';
+		break;
+	case 5:
+		print '<div id="pw_adbox_63814_4_0"></div>';
+		break;
+}
+ ?>

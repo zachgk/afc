@@ -1,7 +1,6 @@
 // JavaScript Document
 
-var wk = 0;
-var wk2 = 0;
+var wk ,wk2, ad_number=1;
 
 function enable_drag(){
   $('.a4c_ad').draggable({
@@ -37,7 +36,8 @@ function create_ad() {
 
 
 function start_ad(top,left) {
-    $('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
+	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
+    $('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
 		$(".a4c_ad_new").delay(200).fadeIn(); //prevents the flash of the new ad
 		$(".a4c_ad").hover(function(){
 			$(this).find(".a4c_panel").css({
@@ -51,6 +51,7 @@ function start_ad(top,left) {
 				"left":"-75px"
 			});
 		});		
+		ad_number++;
 		enable_drag();
 		enable_remove();
 }
