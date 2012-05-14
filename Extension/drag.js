@@ -15,8 +15,7 @@ function enable_drag(){
 
 function enable_remove(){
   $('.a4c_remove').click(function(){
-    console.log('remove');
-    $(this).parent().parent().remove();//this does not work
+    $(this).parent().parent().remove();
 	save_ad_positions();
   });
 }
@@ -83,3 +82,4 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 });
 
 startup();
+

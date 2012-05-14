@@ -33,6 +33,10 @@ embed body {
   background: red;
 }
 
+.adsforcharity_ad span:hover{
+  color: red;
+}
+
 .adsforcharity_ad .a4c_move{
   cursor: move
 }
