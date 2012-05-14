@@ -49,6 +49,10 @@ function request_remove_all(){
   }
 }
 
+function request_remove(){
+  
+}
+
 function save_ad_positions(data){
   var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
@@ -58,14 +62,6 @@ function save_ad_positions(data){
       tx.executeSql('INSERT INTO site_positions(site, top, left) VALUES ("' + data.url + '", "'+ data.positions[i].top +'", "'+ data.positions[i].left +'")');
     }
   });
-}
-
-function site_interactions(){
-	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-	  if(changeInfo && changeInfo.url && changeInfo.url.indexOf("http://ads4charity.org")!= -1){
-		chrome.tabs.executeScript(tabId, {"file":"site_interactions.js"});
-	  }
-	});
 }
 
 function startup_info(url){
@@ -150,9 +146,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 
 set_icon();
 data_send_check();
-site_interactions();
-
-
 
 </script>
 </head>

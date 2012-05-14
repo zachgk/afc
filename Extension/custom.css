@@ -8,7 +8,7 @@ embed body {
 }
 
 .adsforcharity_ad span{
-  padding-left: 5px;
+  padding-left: 18px;
 }
 
 .adsforcharity_ad embed {
@@ -17,26 +17,26 @@ embed body {
 }
 
 .panel {
-  display: none;
-  margin-left: 124px;
-  margin-top: -125px;
-  padding: 5px 0px 5px 0px;
-  margin-bottom: -52px;
-  background-color: gray;
-  width: 76px;
-  display: none;
+  opacity: 0.01;
+  z-index: -5;
+  margin: -124px 0px -52px 83px;
+  padding: 13px 7px 13px 13px ;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  position: absolute;
+  left: -75px;
+  width: 90px;
+  font-size: 16px;
+  line-height: 26px;
 }
 
 .adsforcharity_ad_new {
   position: absolute;
   z-index:10000;
-  background: red;
-}
-
-.adsforcharity_ad span:hover{
-  color: red;
+  background: transparent;
 }
 
 .adsforcharity_ad .a4c_move{
-  cursor: move
+  cursor: move;
 }
