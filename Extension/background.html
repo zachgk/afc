@@ -113,6 +113,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "request_startup_info"){
     startup_info(request.url)
     sendResponse({});
+  } else if(request.action == "set_charity"){
+    localStorage.charity = request.charity;
+    sendResponse({});
   } else{}
 });
 
