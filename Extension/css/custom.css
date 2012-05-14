@@ -2,17 +2,17 @@ embed body {
   margin: 0px;
 }
 
-.adsforcharity_ad {
+.a4c_ad {
   width: 125px;
   height: 112px;
 }
 
-.adsforcharity_ad span{
+.a4c_ad span{
   padding-left: 18px;
 }
 
 
-.adsforcharity_ad span:hover{
+.a4c_ad span:hover{
   text-decoration: underline;
 }
 
@@ -20,16 +20,16 @@ embed body {
   cursor: pointer;
 }
 
-.adsforcharity_ad .a4c_move{
+.a4c_ad .a4c_move{
   cursor: move;
 }
 
-.adsforcharity_ad embed {
+.a4c_ad embed {
   margin: -21px -8px;
   width: 133px;
 }
 
-.panel {
+.a4c_panel {
   opacity: 0.01;
   z-index: -5;
   margin: -124px 0px -52px 83px;
@@ -44,7 +44,7 @@ embed body {
   line-height: 26px;
 }
 
-.adsforcharity_ad_new {
+.a4c_ad_new {
   position: absolute;
   z-index:10000;
   background: transparent;
