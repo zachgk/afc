@@ -29,7 +29,11 @@ function save_ad_positions(){
 }
 
 function create_ad() {
-  start_ad("100px","100px");
+  if(ad_number <=5){
+    start_ad("100px","100px");
+  } else {
+    alert('You can not have more than 5 ads');
+  }
 }
 
 
@@ -53,6 +57,7 @@ function start_ad(top,left) {
 		ad_number++;
 		enable_drag();
 		enable_remove();
+		save_ad_positions();
 }
 
 function startup(){

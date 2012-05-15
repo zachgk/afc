@@ -2,20 +2,14 @@
 
 <script>
 
-var ad_number = 0;
 var wk = 0;
 var wk2 = 0;
 
 function request_create(){
-//  if(ad_number<2){
-    ad_number++;
 	increase_charity_views(1);
     chrome.tabs.getSelected(null, function(tab) {
       chrome.tabs.sendRequest(tab.id, {action: "create"});
     });
-//  } else {
-//  console.log('created too many ads');
-//  }
 }
 
 
@@ -47,7 +41,6 @@ function startup_info(url) {
       for(i=0; i< results.rows.length; i++){
         wk2 = {top: results.rows.item(i).top, left: results.rows.item(i).left}; 
         wk.push ( wk2 );        
-        ad_number++;
       }
       startup_ads(wk);     
     });
