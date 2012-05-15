@@ -24,7 +24,7 @@ function save_ad_positions(data) {
     }
   });
 }
-
+/*
 function site_interactions() {
 	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 	  if(changeInfo && changeInfo.url && changeInfo.url.indexOf("http://ads4charity.org")!= -1){
@@ -32,6 +32,7 @@ function site_interactions() {
 	  }
 	});
 }
+*/
 
 function startup_info(url) {
   var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
@@ -91,7 +92,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 });
 
 
-site_interactions();
+//site_interactions();
 
 
 

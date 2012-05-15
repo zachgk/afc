@@ -22,8 +22,14 @@
       "css": ["jquery/jquery-ui-1.8.16.custom.css", "css/custom.css", "css/icons.css", "noty/css/jquery.noty.css", "noty/css/noty_theme_default.css"],
       "js": [ "jquery/jquery-1.6.2.min.js", "jquery/jquery-ui-1.8.16.custom.min.js", "drag.js", "noty/js/jquery.noty.js"],
 	  "run_at": "document_end"
+    },
+	{
+      "matches": ["*://ads4charity.org/*"],
+	  "js": [  "site_interactions.js"],
+	  "run_at": "document_end"
     }
   ],
+    
   "background_page": "background.html",
   "options_page": "options.html"
 }

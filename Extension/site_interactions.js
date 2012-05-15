@@ -1,4 +1,6 @@
-var background_local_storage;
+console.log('Interact with the ads4chairty.org site as needed');
+
+var background_local_storage, current_charity;
 
 function rewrite_personal_contributions(){
 	$('span.a4c_personal_contribution').each(function(index, element){
@@ -13,16 +15,32 @@ function rewrite_personal_contributions(){
 	});
 }
 
+
+
+function update_current_charity() {
+	console.log("updating charity...");
+	chrome.extension.sendRequest({action: "get_charity"}, function(response){
+		current_charity = response.charity;
+	  highlight_current_charity();
+	});
+}
 chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
   background_local_storage = response.localStorage;
   rewrite_personal_contributions();
 });
 
-console.log('Interact with the ads4chairty.org site as needed');
+update_current_charity();
+
 $('.select-charity').click(function(e){
   noty_message("Your charity options have been saved.");
   chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid')});
+  update_current_charity();
 });
+
+function highlight_current_charity() {
+  $("span[data-cid]").parent().parent().css("background", "#f3f3f3");
+  $(".view-display-id-page_1").find('span[data-cid="'+current_charity+'"]').parent().parent().css("background", "green");
+}
 
 function noty_message(message) {
 	noty({"text":message,"layout":"topRight","type":"success","animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":1600,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false});
