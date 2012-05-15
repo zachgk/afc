@@ -20,5 +20,10 @@ chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 
 console.log('Interact with the ads4chairty.org site as needed');
 $('.select-charity').click(function(e){
+  noty_message("Your charity options have been saved.");
   chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid')});
 });
+
+function noty_message(message) {
+	noty({"text":message,"layout":"topRight","type":"success","animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":1600,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false});
+}
