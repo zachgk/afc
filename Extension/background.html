@@ -60,31 +60,7 @@ function startup_ads(positions){
   });
 }
 
-function set_icon(){
-  var canvas = document.createElement('canvas'),ctx;
-  canvas.height = 19;
-  canvas.width = 19;
-  ctx = canvas.getContext('2d');
-  
-  ctx.fillStyle = "#00FF00"; 
-  ctx.fillRect(0,0,19,19);
-  
-  ctx.fillStyle = "#FF6600";
-  ctx.beginPath();
-  ctx.arc(9.5,9.5,8,0,Math.PI*2);
-  ctx.closePath();
-  ctx.fill();
-    
-  ctx.fillStyle = "#0000FF";
-  ctx.font = "13px Arial"
-  ctx.fillText("A",5,14);
-  
-  var imageData = ctx.getImageData(0,0,19,19);
-  chrome.browserAction.setIcon({
-    imageData: imageData
-  });
-
-}
+//This is the grave site where the canvas icon was burried. You will never be forgotten.
 
         //End Functions and begin stuff loaded on page start
 
@@ -112,7 +88,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else{}
 });
 
-set_icon();
 site_interactions();
 
 
