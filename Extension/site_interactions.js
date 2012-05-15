@@ -18,9 +18,8 @@ function rewrite_personal_contributions(){
 
 
 function update_current_charity() {
-	console.log("updating charity...");
 	chrome.extension.sendRequest({action: "get_charity"}, function(response){
-		current_charity = response.charity;
+	  current_charity = response.charity;
 	  highlight_current_charity();
 	});
 }
@@ -32,14 +31,14 @@ chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 update_current_charity();
 
 $('.select-charity').click(function(e){
-  noty_message("Your charity options have been saved.");
+  noty_message("Your charity selection has been saved.");
   chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid')});
   update_current_charity();
 });
 
 function highlight_current_charity() {
-  $("span[data-cid]").parent().parent().css("background", "#f3f3f3");
-  $(".view-display-id-page_1").find('span[data-cid="'+current_charity+'"]').parent().parent().css("background", "green");
+  $("span[data-cid]").css("opacity", .45).parent().parent().css("background", "#f3f3f3");
+  $(".view-display-id-page_1").find('span[data-cid="'+current_charity+'"]').css("opacity", 1).parent().parent().css("background", "green");
 }
 
 function noty_message(message) {
