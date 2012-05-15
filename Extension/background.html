@@ -54,8 +54,6 @@ function startup_ads(positions){
   });
 }
 
-//This is the grave site where the canvas icon was burried. You will never be forgotten.
-
 function increase_charity_views(amount){
   if(localStorage['charity-' + localStorage.charity ]){
     localStorage['charity-' + localStorage.charity ]= Number(localStorage['charity-' + localStorage.charity ]) + amount;
@@ -89,6 +87,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({"charity":localStorage.charity});
   } else{}
 });
+
 
 site_interactions();
 
