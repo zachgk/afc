@@ -34,9 +34,9 @@ switch($_GET["ad_number"]) {
 }
 
 if($charity = $_GET["charity"]){
+  $mysqli = new mysqli("localhost", "zachki5_drplafc", "2weeks", "zachki5_drplafc");
   $add_view_query = "UPDATE dr_field_data_field_charity_views SET field_charity_views_value=field_charity_views_value+1 WHERE entity_id=$charity";
-  //$add_view_result = mysqli_query(/*database connect variable*/,$add_view_query);
-  //Should I be changing dr_field_revision_field_charity_views instead?
+  $mysqli->query($add_view_query);
 }
 
  ?>
