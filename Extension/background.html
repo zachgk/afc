@@ -85,6 +85,8 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "get_charity"){
     sendResponse({"charity":localStorage.charity});
+  } else if(request.action == "get_local_storage"){
+    sendResponse({"localStorage":localStorage});
   } else{}
 });
 
