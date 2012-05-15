@@ -15,7 +15,7 @@
 </script>
 
 <?php 
-switch($_GET["ad_number"]) {
+switch(intval($_GET["ad_number"])) {
 	case 1:
 		print '<div id="pw_adbox_60904_4_0"></div>';
 		break;
@@ -33,7 +33,7 @@ switch($_GET["ad_number"]) {
 		break;
 }
 
-if( ($charity = $_GET["charity"]) && is_numberic($charity)){
+if( ($charity = $_GET["charity"]) && intval($charity)){
   $mysqli = new mysqli("localhost", "zachki5_drplafc", "2weeks", "zachki5_drplafc");
   $add_view_query = "UPDATE dr_field_data_field_charity_views SET field_charity_views_value=field_charity_views_value+1 WHERE entity_id=$charity";
   $mysqli->query($add_view_query);
