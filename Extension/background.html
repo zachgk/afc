@@ -9,6 +9,7 @@ var wk2 = 0;
 function request_create(){
 //  if(ad_number<2){
     ad_number++;
+	increase_charity_views(1);
     chrome.tabs.getSelected(null, function(tab) {
       chrome.tabs.sendRequest(tab.id, {action: "create"});
     });
@@ -20,7 +21,6 @@ function request_create(){
 
 
 function save_ad_positions(data) {
-console.log(data);
   var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(id unique,site, top, left)');
@@ -55,6 +55,7 @@ function startup_info(url) {
 }
 
 function startup_ads(positions){
+  increase_charity_views(positions.length);
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions});
   });
@@ -84,6 +85,14 @@ function set_icon(){
     imageData: imageData
   });
 
+}
+
+function increase_charity_views(amount){
+  if(localStorage['charity-' + localStorage.charity ]){
+    localStorage['charity-' + localStorage.charity ]= Number(localStorage['charity-' + localStorage.charity ]) + amount;
+  } else {
+    localStorage['charity-' + localStorage.charity ] = amount;
+  }
 }
 
         //End Functions and begin stuff loaded on page start
