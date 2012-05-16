@@ -31,7 +31,9 @@ chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 update_current_charity();
 
 $('.select-charity').click(function(e){
-  noty_message("Your charity selection has been saved.");
+  	chrome.extension.sendRequest({action: "display_message", message: "Your charity selection has been saved."}, function(response){
+		noty(response.formated_message);
+	});
   chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid')});
   update_current_charity();
 });
@@ -41,6 +43,3 @@ function highlight_current_charity() {
   $(".view-display-id-page_1").find('span[data-cid="'+current_charity+'"]').css("opacity", 1).parent().parent().css("background", "green");
 }
 
-function noty_message(message) {
-	noty({"text":message,"layout":"topRight","type":"success","animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":1600,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false});
-}

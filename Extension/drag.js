@@ -16,6 +16,7 @@ function enable_remove(){
   $('.a4c_remove').click(function(){
     $(this).parent().parent().fadeOut().remove();
 	save_ad_positions();
+	ad_number--;
   });
 }
 
@@ -29,19 +30,25 @@ function save_ad_positions(){
 }
 
 function create_ad() {
-  if(ad_number <=5){
-    start_ad("100px","100px");
+
+  if(ad_number <= 5){
+	start_ad("100px","100px");
+	chrome.extension.sendRequest({action: "display_message", message: "An add has been created"+ ad_number, type: "alert", time: 2000}, function(response){
+		noty(response.formated_message);
+	});
+
   } else {
-    alert('You can not have more than 5 ads');
+	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only have up to five advertisements on each website." + ad_number, type: "alert", time: 2000}, function(response){
+		noty(response.formated_message);
+	});
   }
 }
 
 
 
 function start_ad(top,left) {
-	console.log("new ad");
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
-    $('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
+	$('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
 		$(".a4c_ad_new").delay(200).fadeIn(); //prevents the flash of the new ad
 		$(".a4c_ad").hover(function(){
 			$(this).find(".a4c_panel").css({
@@ -55,10 +62,10 @@ function start_ad(top,left) {
 				"left":"-75px"
 			});
 		});		
-		ad_number++;
 		enable_drag();
 		enable_remove();
 		save_ad_positions();
+		ad_number++;
 }
 
 function startup(){
@@ -77,13 +84,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   if(request.action == "create"){
     create_ad();
     sendResponse({});
-  } else if(request.action == "drag"){
-    toggle_drag(request.enabled);
-    sendResponse({});
-  } else if(request.action == "remove_all"){
-    remove_all_ads();
-    sendResponse({});
-  }  else if(request.action == "startup_ads"){
+  } else if(request.action == "startup_ads"){
     startup_ads(request);
     sendResponse({});
   } else {}
