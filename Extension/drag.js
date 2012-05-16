@@ -33,12 +33,12 @@ function create_ad() {
 
   if(ad_number <= 5){
 	start_ad("100px","100px");
-	chrome.extension.sendRequest({action: "display_message", message: "An add has been created"+ ad_number, type: "alert", time: 2000}, function(response){
+/*	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
 	});
-
+*/
   } else {
-	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only have up to five advertisements on each website." + ad_number, type: "alert", time: 2000}, function(response){
+	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only place five advertisements on each website.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
 	});
   }
