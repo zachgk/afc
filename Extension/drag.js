@@ -48,8 +48,8 @@ function create_ad() {
 
 function start_ad(top,left) {
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
-	$('body').append("<div class='a4c_ad a4c_ad_new' style='display:none;top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
-		$(".a4c_ad_new").delay(200).fadeIn(); //prevents the flash of the new ad
+	$('body').append("<div class='a4c_ad a4c_ad_new' style='top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
+		$(".a4c_ad_new").disableSelection(); //prevents users from highlighting the panel/advertisement
 		$(".a4c_ad").hover(function(){
 			$(this).find(".a4c_panel").css({
 				"opacity":"1",
