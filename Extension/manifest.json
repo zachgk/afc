@@ -20,7 +20,7 @@
     {
       "matches": ["<all_urls>"],
       "css": ["jquery/jquery-ui-1.8.16.custom.css", "css/custom.css", "css/icons.css", "noty/css/jquery.noty.css", "noty/css/noty_theme_default.css"],
-      "js": [ "jquery/jquery-1.6.2.min.js", "jquery/jquery-ui-1.8.16.custom.min.js", "drag.js", "noty/js/jquery.noty.js"],
+      "js": [ "jquery/jquery-1.6.2.min.js", "jquery/jquery-ui-1.8.16.custom.min.js", "drag.js", "noty/js/jquery.noty.js", "jquery/jquery-collision-1.0.1.min.js","jquery/jquery-ui-draggable-collision-1.0.1.min.js"],
 	  "run_at": "document_end"
     },
 	{
