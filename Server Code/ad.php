@@ -17,19 +17,19 @@
 <?php 
 switch(intval($_GET["ad_number"])) {
 	case 1:
-		print '<div id="pw_adbox_60904_4_0"></div>';
+		print '<div id="pw_adbox_63855_4_0"></div>';
 		break;
 	case 2:
-		print '<div id="pw_adbox_63814_4_0"></div>';
+		print '<div id="pw_adbox_63856_4_0"></div>';
 		break;	
 	case 3:
-		print '<div id="pw_adbox_60904_4_0"></div>';
+		print '<div id="pw_adbox_63858_4_0"></div>';
 		break;
 	case 4:
-		print '<div id="pw_adbox_63814_4_0"></div>';
+		print '<div id="pw_adbox_63859_4_0"></div>';
 		break;
 	case 5:
-		print '<div id="pw_adbox_63814_4_0"></div>';
+		print '<div id="pw_adbox_63860_4_0"></div>';
 		break;
 }
 
@@ -38,5 +38,4 @@ if( ($charity = $_GET["charity"]) && intval($charity)){
   $add_view_query = "UPDATE dr_field_data_field_charity_views SET field_charity_views_value=field_charity_views_value+1 WHERE entity_id=$charity";
   $mysqli->query($add_view_query);
 }
-
- ?>
+?>
