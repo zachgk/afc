@@ -4,7 +4,7 @@ embed body {
 
 .a4c_ad {
   width: 125px;
-  height: 112px;
+  height: 123px;
 }
 
 .a4c_ad span{
@@ -25,7 +25,6 @@ embed body {
 }
 
 .a4c_ad embed {
-  margin: -21px -8px;
   width: 133px;
 }
 
