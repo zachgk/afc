@@ -16,6 +16,9 @@ button:hover {
   background: #9EE8FC;
   font-size: 32px;
 }
+button span {
+  font-size: 50%;
+}
 </style>
 <script>
 function close_popup() {
@@ -40,7 +43,7 @@ function help(){
 
 </script>
 
-<button id='create' onclick="create()">Create Ad</button>
+<button id='create' onclick="create()">Create Ad<br><span>(or press Control+F3)</span></button>
 <button id='select' onclick="select()">Select a Charity</button>
 <button id='help' onclick="help()">Help</button>
 </html>

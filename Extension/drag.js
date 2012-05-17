@@ -94,3 +94,12 @@ chrome.extension.sendRequest({action: "get_charity"}, function(response){
   charity_selection = response.charity;
 });
 startup();
+
+
+//keyboard shortcuts
+window.addEventListener("keydown", function(event) {
+  var modifier = event.ctrlKey || event.metaKey;   // Bind to both command (for Mac) and control (for Win/Linux)
+  if (modifier && event.keyCode == 114) { //F3
+	create_ad();
+  }
+}, false);
