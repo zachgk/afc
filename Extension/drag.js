@@ -36,9 +36,8 @@ function save_ad_positions(){
 }
 
 function create_ad() {
-
   if(ad_number <= 5){
-	start_ad(null,"100px");
+	start_ad(  (ad_number * 123) + "px"  ,"100px");
 /*	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
 	});
@@ -53,9 +52,6 @@ function create_ad() {
 
 
 function start_ad(top,left) {
-	if (!top) { 
-		top = (ad_number * 123) + "px";
-	}
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
 	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
 		$(".a4c_ad_new").disableSelection(); //prevents users from highlighting the panel/advertisement
