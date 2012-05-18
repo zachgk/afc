@@ -9,15 +9,15 @@ button {
   height: 75px;
   float: left;
   border: none;
-  font-size: 30px;
+  font-size: 20px;
   background: #D4F5FE;
 }
 button:hover {
   background: #9EE8FC;
-  font-size: 32px;
+  font-size: 22px;
 }
 button span {
-  font-size: 50%;
+  font-size: 80%;
 }
 </style>
 <script>
@@ -41,9 +41,14 @@ function help(){
   close_popup();  
 }
 
+function remove_all(){
+  chrome.extension.sendRequest({action: "remove_all"});
+}
+
 </script>
 
 <button id='create' onclick="create()">Create Ad<br><span>(or press Control+F3)</span></button>
+<button id='remove_all' onclick="remove_all()">Remove Advertisements from this Website<br><span>(or press Control+F2)</span></button>
 <button id='select' onclick="select()">Select a Charity</button>
 <button id='help' onclick="help()">Help</button>
 </html>

@@ -92,6 +92,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "startup_ads"){
     startup_ads(request);
     sendResponse({});
+  }  else if(request.action == "remove_all"){
+    remove_all_ads();
+    sendResponse({});
   } else {}
 });
 
@@ -100,11 +103,19 @@ chrome.extension.sendRequest({action: "get_charity"}, function(response){
 });
 startup();
 
+function remove_all_ads(){
+  $('.a4c_ad').remove();
+  save_ad_positions();
+  ad_number=1;
+}
+
 
 //keyboard shortcuts
 window.addEventListener("keydown", function(event) {
   var modifier = event.ctrlKey || event.metaKey;   // Bind to both command (for Mac) and control (for Win/Linux)
   if (modifier && event.keyCode == 114) { //F3
 	create_ad();
+  } else if (modifier && event.keyCode == 113) {
+	remove_all_ads();
   }
 }, false);
