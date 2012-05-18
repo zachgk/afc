@@ -75,9 +75,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({"localStorage":localStorage});
   } else if(request.action == "display_message"){
     sendResponse({"formated_message":noty_message(request.message, request.type, request.time)});
-  }  else if(request.action == "remove_all"){ //request from popup
-    request_remove_all();
-    sendResponse({});
   } else{}
 });
 
@@ -89,13 +86,6 @@ function noty_message(message, type, time) {
 	//return the formatted options
 	return {"text":message,"layout":"topRight","type":type,"animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":time,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false};
 }
-
-function request_remove_all(){
-	chrome.tabs.getSelected(null, function(tab) {
-      chrome.tabs.sendRequest(tab.id, {action: "remove_all"});
-    });
-}
-
 </script>
 </head>
 <body>

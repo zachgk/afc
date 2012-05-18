@@ -83,7 +83,7 @@ function startup_ads(data){
   }
 }
 
-        //End Functions and begin stuff loaded on page start
+  //End Functions and begin stuff loaded on page start
 
 chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   if(request.action == "create"){
@@ -92,7 +92,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "startup_ads"){
     startup_ads(request);
     sendResponse({});
-  }  else if(request.action == "remove_all"){
+  }  else if(request.action == "remove_all_ads"){
     remove_all_ads();
     sendResponse({});
   } else {}

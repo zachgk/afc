@@ -42,7 +42,10 @@ function help(){
 }
 
 function remove_all(){
-  chrome.extension.sendRequest({action: "remove_all"});
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {action: "remove_all_ads"});
+	});
+//  chrome.extension.sendRequest({action: "remove_all"});
 }
 
 </script>
