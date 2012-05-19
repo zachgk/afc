@@ -3,30 +3,12 @@
   <head>
   <meta http-equiv="content-type" content="text/html; charset=windows-1250">
   <title>Ads for Charity Options</title>
-  <script>
-    function change_charity(){
-      localStorage.charity = document.getElementById('change_charity_select').value;
-    }  
-	
-	chrome.tabs.create({"url":"http://ads4charity.org/charities"});
-	chrome.tabs.getCurrent(function(tab){
-	  console.log(tab);
-	  chrome.tabs.remove(tab.id);
-	});
-  </script>
   </head>
-  <!--<body>
+<body>
   
-  <center>
-  <h2>Ads for Charity Options</h2>
-  <br<><br><br>
-  <p>Pick the Charity to Send to</p>
-  <select id='change_charity_select' onchange='change_charity()'>
-    <option value='Charity_1'>Charity 1</option>
-    <option value='Charity_2'>Charity 2</option>
-    <option value='Charity_3'>Charity 3</option>
-  </select>
-  <center>
+<center>
+<h2>Ads for Charity Options</h2>
+<center>
   
-  </body>-->
+</body>
 </html>
