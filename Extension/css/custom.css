@@ -48,14 +48,18 @@ embed body {
   z-index:10000;
   background: transparent;
 }
+#a4c_guide_box {
+  display: none;
+}
 
 .a4c_drag_guide {
   background: gray;
-  opacity: 0.1;
+  display: none;
   z-index: 9999;
 }
 
 .a4c_enabled_guide {
+	display: block;
 	opacity: 0.35;
 }
 
