@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var wk ,wk2, ad_number=1, charity_selection;
+var wk ,wk2, ad_number=1, charity_selection, mouseX;
 
 function enable_drag(){
   $('.a4c_ad').draggable({
@@ -9,9 +9,14 @@ function enable_drag(){
 	"stop":function(event, ui){
 	  save_ad_positions();
 	  $(this).addClass('a4c_idle');
+	  disable_guides();
 	},
 	"start":function(event,ui){
+      enable_guides();
 	  $(this).removeClass('a4c_idle');
+	},
+	"drag":function(event, ui) {
+	  update_guides();
 	},
 	"obstacle":".a4c_idle",
 	"preventCollision":true
@@ -37,7 +42,7 @@ function save_ad_positions(){
 
 function create_ad() {
   if(ad_number <= 5){
-	start_ad(  (ad_number * 123) + "px"  ,"100px");
+	start_ad(  (ad_number * 130) + "px"  ,"100px");
 /*	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
 	});
@@ -66,15 +71,57 @@ function start_ad(top,left) {
 				"-webkit-transition":"all 0.25s ease-in-out",
 				"left":"-75px"
 			});
-		});		
+		});
 		enable_drag();
 		enable_remove();
 		save_ad_positions();
 		ad_number++;
 }
 
+function enable_guides() {
+	$("#a4c_guide_box").show();
+	update_guides();
+}
+
+function disable_guides() {
+	$("#a4c_guide_box").hide();
+}
+
+function update_guides() {
+	$(".a4c_left_guide").css({
+		'height' : $(window).height(),
+		'width' : $(window).width() / 2,
+	});
+	$(".a4c_right_guide").css({
+		'height' : $(window).height(),
+		'width' : $(window).width() / 2,
+	});
+	if (mouseX > ($(window).width() / 2)) {
+		$(".a4c_right_guide").addClass("a4c_enabled_guide");
+		$(".a4c_left_guide").removeClass("a4c_enabled_guide");
+	} else {
+		$(".a4c_right_guide").removeClass("a4c_enabled_guide");
+		$(".a4c_left_guide").addClass("a4c_enabled_guide");
+	}
+}
+
+
+
+$(document).mousemove(function(e){
+	mouseX = e.pageX;
+	 // $('#status').html(e.pageX +', '+ e.pageY);
+}); 
+
+$(window).resize(function() {
+	update_guides();
+});
 function startup(){
-  chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});     
+	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});     
+	$("body").append('<div id="a4c_guide_box"><div class="a4c_left_guide a4c_drag_guide"></div><div class="a4c_right_guide a4c_drag_guide"></div></div>');
+	$(".a4c_drag_guide").css({
+		'position' : 'absolute',
+		'top' : '0px',
+	});
 } 
 
 function startup_ads(data){
