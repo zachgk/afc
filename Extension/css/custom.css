@@ -11,17 +11,13 @@ embed body {
   padding-left: 18px;
 }
 
-
-.a4c_ad span:hover{
-  text-decoration: underline;
-}
-
 .a4c_remove {
   cursor: pointer;
 }
 
 .a4c_ad .a4c_move{
   cursor: move;
+  margin-left: 86px;
 }
 
 .a4c_ad embed {
@@ -29,18 +25,15 @@ embed body {
 }
 
 .a4c_panel {
-  opacity: 0.01;
-  z-index: -5;
+  opacity: 0.001;
+  z-index: 9998;
   margin: -124px 0px -52px 83px;
-  padding: 13px 7px 13px 13px ;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 8px;
   position: absolute;
+  background: white;
   left: -75px;
-  width: 90px;
-  font-size: 16px;
-  line-height: 26px;
+  width: 126px;
+  top: 131px;
+  -webkit-transition: opacity 0.35s ease-out;
 }
 
 .a4c_ad_new {
@@ -48,6 +41,7 @@ embed body {
   z-index:10000;
   background: transparent;
 }
+
 #a4c_guide_box {
   display: none;
 }

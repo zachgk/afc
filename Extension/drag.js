@@ -9,7 +9,7 @@ function enable_drag(){
 	  $(this).addClass('a4c_idle');
 	  disable_guides();
 	  if ($(this).css("left").substring(0, $(this).css("left").length - 2) > $(window).width() / 2) {
-		$(this).css("right", $(window).width() - $(this).css("left").substring(0, $(this).css("left").length - 2) - 62.5).css("left", "auto");
+		$(this).css("right", $(window).width() - $(this).css("left").substring(0, $(this).css("left").length - 2) - 125	).css("left", "auto");
 	  }
 	  save_ad_positions();
 	},
@@ -62,19 +62,12 @@ function create_ad() {
 
 function start_ad(top,left, right) {
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
-	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + "'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span class='a4c_remove'>Remove</span><br><span class='a4c_move'>Move</span></div></div>");
+	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + "'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
 		$(".a4c_ad_new").disableSelection(); //prevents users from highlighting the panel/advertisement
 		$(".a4c_ad").hover(function(){
-			$(this).find(".a4c_panel").css({
-				"opacity":"1",
-				"-webkit-transition":"left 0.25s ease-in-out",
-				"left":"34px"
-			});
+			$(this).find(".a4c_panel").css("opacity", 0.85);
 		}, function() {
-			$(".a4c_ad .a4c_panel").css({
-				"-webkit-transition":"all 0.25s ease-in-out",
-				"left":"-75px"
-			});
+			$(this).find(".a4c_panel").css("opacity", 0);
 		});
 		enable_drag();
 		enable_remove();

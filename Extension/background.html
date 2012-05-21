@@ -81,7 +81,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 function noty_message(message, type, time) {
 	//defaults
 	time = typeof time !== 'undefined' ? time : 1600; //time to autoclose the message
-	type = typeof type !== 'undefined' ? type : "success"; 
+	type = typeof type !== 'undefined' ? type : "success"; //"success" is the default message type
 	
 	//return the formatted options
 	return {"text":message,"layout":"topRight","type":type,"animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":time,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false};
