@@ -1,9 +1,7 @@
 <html>
-
 <script>
 
-var wk = 0;
-var wk2 = 0;
+var wk, wk2;
 
 function request_create(){
 	increase_charity_views(1);
@@ -12,10 +10,8 @@ function request_create(){
     });
 }
 
-
-
 function save_ad_positions(data) {
-  var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
+  var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(id unique,site, top, left, right)');
     tx.executeSql('DELETE FROM site_positions WHERE site = "' + data.url + '"');
@@ -26,7 +22,7 @@ function save_ad_positions(data) {
 }
 
 function startup_info(url) {
-  var db = openDatabase('mydb','1.0','adsforcharity database', 5*1024*1024);
+  var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('SELECT * FROM site_positions WHERE site = "'+ url +'"',[], function(tx, results){
       wk = new Array();
@@ -54,7 +50,7 @@ function increase_charity_views(amount){
   }
 }
 
-    //End Functions and begin stuff loaded on page start
+    //Message passing functions
 
 chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   if(request.action == "create"){ //request from popup
@@ -78,13 +74,12 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else{}
 });
 
-function noty_message(message, type, time) {
-	//defaults
+function noty_message(message, type, time) { //Helper function for creating Noty settings
+	//Default message parameters
 	time = typeof time !== 'undefined' ? time : 1600; //time to autoclose the message
 	type = typeof type !== 'undefined' ? type : "success"; //"success" is the default message type
 	
-	//return the formatted options
-	return {"text":message,"layout":"topRight","type":type,"animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":time,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false};
+	return {"text":message,"layout":"topRight","type":type,"animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":time,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false};  //return the formatted options
 }
 </script>
 </head>

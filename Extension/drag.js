@@ -106,7 +106,6 @@ function update_guides() {
 
 $(document).mousemove(function(e){
 	mouseX = e.pageX;
-	 // $('#status').html(e.pageX +', '+ e.pageY);
 }); 
 
 $(window).resize(function() {
@@ -159,7 +158,7 @@ window.addEventListener("keydown", function(event) {
   var modifier = event.ctrlKey || event.metaKey;   // Bind to both command (for Mac) and control (for Win/Linux)
   if (modifier && event.keyCode == 114) { //F3
 	create_ad();
-  } else if (modifier && event.keyCode == 113) {
+  } else if (modifier && event.keyCode == 113) {  //F2
 	remove_all_ads();
   }
 }, false);
