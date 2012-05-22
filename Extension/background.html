@@ -35,7 +35,6 @@ function remove_all_ads() {
   db.transaction( function(tx) {
     tx.executeSql('DELETE FROM site_positions');
   });
-  console.log("Ads have been removed");
 }
 
 function startup_info(url) {
@@ -89,7 +88,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "display_message"){
     sendResponse({"formated_message":noty_message(request.message, request.type, request.time)});
   } else if(request.action == "remove_all_ads"){
-  	console.log("clearing ads recieved");
     remove_all_ads();
 	sendResponse({});
 	} else{}
