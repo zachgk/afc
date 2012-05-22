@@ -567,7 +567,7 @@
                 this.elements.push((new Element("input", {
                     "id": optionID,
                     "name": settingID,
-                    "class": "setting element radio-buttons",
+                    "class": "setting element radio-buttons " + this.params.name,
                     "type": "radio",
                     "value": option[0]
                 })).inject(container));

@@ -8,6 +8,11 @@ window.addEvent("domready", function () {
 						noty(response.formated_message);
 					});
 				});
+				$(".autoAds").click(function() {
+					chrome.extension.sendRequest({action: "display_message", message: "Advertisements are now automatically being placed with the <i>" + $(this).find("label").text() + "</i> template.", time: 4000}, function(response){
+						noty(response.formated_message);
+					});
+				});
 			});
 		})(jQuery);
     });
