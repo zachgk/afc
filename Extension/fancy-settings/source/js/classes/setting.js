@@ -132,7 +132,8 @@
             
             this.element = new Element("input", {
                 "class": "setting element button",
-                "type": "button"
+                "type": "button",
+				"id": this.params.name
             });
             
             this.label = new Element("label", {

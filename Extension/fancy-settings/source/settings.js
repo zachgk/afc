@@ -1,7 +1,15 @@
 window.addEvent("domready", function () {
     new FancySettings.initWithManifest(function (settings) {
-        settings.manifest.remove_all.addEvent("action", function () {
-		  chrome.extension.sendRequest({action: "remove_all_ads"});
-        });
+		(function($) {
+			$(function() {
+				$("#remove_all").click(function() {
+					chrome.extension.sendRequest({action: "remove_all_ads"});
+					chrome.extension.sendRequest({action: "display_message", message: "Advertisements will now use the selected template.  If no template is selected, advertisements will not appear on any website until you create them.", time: 4000}, function(response){
+						noty(response.formated_message);
+					});
+				});
+			});
+		})(jQuery);
     });
 });
+
