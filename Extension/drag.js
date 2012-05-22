@@ -1,4 +1,4 @@
-var wk ,wk2, charity_selection, mouseX;
+var wk ,wk2, charity_selection, mouseX, auto_ads;
 var ad_number=1;
 
 function enable_drag(){
@@ -34,17 +34,21 @@ function enable_remove(){
 }
 
 function save_ad_positions(){
+  console.log("Saving advertisement positions");
+  ad_number = 1;
   wk = new Array();
   $('.a4c_ad').each(function(){
-	wk2 ={"top": $(this).css('top') ,"left": $(this).css('left'), "right": $(this).css('right')};
+	wk2 ={"top": $(this).css('top') ,"left": $(this).css('left'), "right": $(this).css('right'), "bottom": $(this).css('bottom')};
     wk.push( wk2 );
+	ad_number++;
   });
+  console.log(wk2);
   chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": window.location.host});
 }
 
 function create_ad() {
   if(ad_number <= 5){
-	start_ad(  (ad_number * 130) + "px"  ,"100px", "auto");
+	start_ad(  (ad_number * 130) + "px"  ,"100px", "auto", "auto");
 /*	
 	//Debug code for message numbers and an example of using our noty helper functions for displaying messages
 	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
@@ -60,9 +64,9 @@ function create_ad() {
 
 
 
-function start_ad(top,left, right) {
+function start_ad(top, left, right, bottom, no_save) {
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
-	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + "'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
+	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
 		$(".a4c_ad_new").disableSelection(); //prevents users from highlighting the panel/advertisement
 		$(".a4c_ad").hover(function(){
 			$(this).find(".a4c_panel").css("opacity", 0.85);
@@ -71,7 +75,9 @@ function start_ad(top,left, right) {
 		});
 		enable_drag();
 		enable_remove();
-		save_ad_positions();
+		if (!no_save) {
+			save_ad_positions();
+		}
 		ad_number++;
 }
 
@@ -102,8 +108,6 @@ function update_guides() {
 	}
 }
 
-
-
 $(document).mousemove(function(e){
 	mouseX = e.pageX;
 }); 
@@ -111,6 +115,7 @@ $(document).mousemove(function(e){
 $(window).resize(function() {
 	update_guides();
 });
+
 function startup(){
 	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});     
 	$("body").append('<div id="a4c_guide_box"><div class="a4c_left_guide a4c_drag_guide"></div><div class="a4c_right_guide a4c_drag_guide"></div></div>');
@@ -122,7 +127,33 @@ function startup(){
 
 function startup_ads(data){
   for(i=0; i<data.positions.length; i++){
-    start_ad(data.positions[i].top,data.positions[i].left, data.positions[i].right);
+    start_ad(data.positions[i].top,data.positions[i].left, data.positions[i].right, data.positions[i].bottom);
+  }
+  if (ad_number == 1) { //if the user hasn't already placed ads on the page, automate them
+	  switch(data.auto_ads) {
+			//start_ad(top, left, right, bottom)
+		  case 'topCorners':
+				start_ad("15px", "15px", "auto", "auto", 1);
+				start_ad("15px", "auto", "15px", "auto", 1);
+		  break;
+		  case 'bottomCorners':
+				start_ad("auto", "15px", "auto", "15px", 1);
+				start_ad("auto", "auto", "15px", "15px", 1);
+		  break;
+		  case 'allCorners':
+				start_ad("auto", "15px", "auto", "15px", 1);
+				start_ad("auto", "auto", "15px", "15px", 1);
+				start_ad("15px", "15px", "auto", "auto", 1);
+				start_ad("15px", "auto", "15px", "auto", 1);
+		  break;
+		  case 'rightCorners':
+				start_ad("auto", "auto", "15px", "15px", 1);
+				start_ad("15px", "auto", "15px", "auto", 1);
+		  break;
+		  case 'leftCorners':
+				start_ad("15px", "15px", "auto", "auto", 1);
+				start_ad("auto", "15px", "auto", "15px", 1);
+		}
   }
 }
 
@@ -151,7 +182,6 @@ function remove_all_ads(){
   save_ad_positions();
   ad_number=1;
 }
-
 
 //keyboard shortcuts
 window.addEventListener("keydown", function(event) {

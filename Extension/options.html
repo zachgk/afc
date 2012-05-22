@@ -3,12 +3,38 @@
   <head>
   <meta http-equiv="content-type" content="text/html; charset=windows-1250">
   <title>Ads for Charity Options</title>
+  <script type="text/javascript" src="jquery/jquery-1.6.2.min.js"></script>
+  <script type="text/javascript" src="noty/js/jquery.noty.js"></script>
+  <link href="noty/css/jquery.noty.css" rel="stylesheet" type="text/css">
+  <link href="noty/css/noty_theme_default.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+  $(function() {
+	$("li").click(function() {
+		console.log($(this));
+		localStorage['auto_ads'] = $(this).attr("template");	
+		chrome.extension.sendRequest({action: "display_message", message: "Advertisements will now be automatically placed using the <i>" + $(this).text() + "</i> template.", type: "success", time: 4000}, function(response){
+			noty(response.formated_message);
+		});
+	});
+  });
+  </script>
   </head>
 <body>
   
 <center>
-<h2>Ads for Charity Options</h2>
-<center>
-  
+	<h2>Ads for Charity Options</h2>
+</center>
+<h2>Automatic Positioning:</h2>
+<p>Once you move an advertisement, the template will be overridden for only that website. To return to the default template or switch templates, remove all advertisements on that website.</p>
+
+Available Templates:
+<ul style="cursor: pointer;">
+	<li template = "allCorners">All Corners</li>
+	<li template = "topCorners">Top Corners</li>
+	<li template = "bottomCorners">Bottom Corners</li>
+	<li template = "rightCorners">Right Corners</li>
+	<li template = "leftCorners">Left Corners</li>
+	<li template = "">None</li>
+</ul>
 </body>
 </html>

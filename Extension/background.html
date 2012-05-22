@@ -11,12 +11,13 @@ function request_create(){
 }
 
 function save_ad_positions(data) {
+	console.log(data);
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
-    tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(id unique,site, top, left, right)');
+    tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(site, top, left, right, bottom)');
     tx.executeSql('DELETE FROM site_positions WHERE site = "' + data.url + '"');
     for(i=0; i<data.positions.length ;i++){
-      tx.executeSql('INSERT INTO site_positions(site, top, left, right) VALUES ("' + data.url + '", "'+ data.positions[i].top +'", "'+ data.positions[i].left+'", "'+ data.positions[i].right +'")');
+      tx.executeSql('INSERT INTO site_positions(site, top, left, right, bottom) VALUES ("' + data.url + '", "'+ data.positions[i].top +'", "'+ data.positions[i].left+'", "'+ data.positions[i].right+'", "'+ data.positions[i].bottom + '")');
     }
   });
 }
@@ -27,7 +28,7 @@ function startup_info(url) {
     tx.executeSql('SELECT * FROM site_positions WHERE site = "'+ url +'"',[], function(tx, results){
       wk = new Array();
       for(i=0; i< results.rows.length; i++){
-        wk2 = {top: results.rows.item(i).top, left: results.rows.item(i).left, right: results.rows.item(i).right}; 
+        wk2 = {top: results.rows.item(i).top, left: results.rows.item(i).left, right: results.rows.item(i).right, bottom: results.rows.item(i).bottom}; 
         wk.push ( wk2 );        
       }
       startup_ads(wk);     
@@ -38,8 +39,8 @@ function startup_info(url) {
 function startup_ads(positions){
   increase_charity_views(positions.length);
   chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions});
-  });
+    chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions, "auto_ads": localStorage['auto_ads']});
+});
 }
 
 function increase_charity_views(amount){
