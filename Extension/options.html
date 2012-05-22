@@ -9,10 +9,9 @@
   <link href="noty/css/noty_theme_default.css" rel="stylesheet" type="text/css">
   <script type="text/javascript">
   $(function() {
-	$("li").click(function() {
-		console.log($(this));
+	$("#templates li").click(function() {
 		localStorage['auto_ads'] = $(this).attr("template");	
-		chrome.extension.sendRequest({action: "display_message", message: "Advertisements will now be automatically placed using the <i>" + $(this).text() + "</i> template.", type: "success", time: 4000}, function(response){
+		chrome.extension.sendRequest({action: "display_message", message: "Advertisements will now be automatically placed using the <i>" + $(this).text() + "</i> template.", time: 3500}, function(response){
 			noty(response.formated_message);
 		});
 	});
@@ -28,7 +27,7 @@
 <p>Once you move an advertisement, the template will be overridden for only that website. To return to the default template or switch templates, remove all advertisements on that website.</p>
 
 Available Templates:
-<ul style="cursor: pointer;">
+<ul id="templates" style="cursor: pointer;">
 	<li template = "allCorners">All Corners</li>
 	<li template = "topCorners">Top Corners</li>
 	<li template = "bottomCorners">Bottom Corners</li>

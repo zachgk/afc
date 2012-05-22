@@ -28,33 +28,25 @@ function enable_drag(){
 function enable_remove(){
   $('.a4c_remove').click(function(){
     $(this).parent().parent().fadeOut().remove();
-	save_ad_positions();
 	ad_number--;
+	save_ad_positions();
   });
 }
 
 function save_ad_positions(){
-  console.log("Saving advertisement positions");
   ad_number = 1;
   wk = new Array();
   $('.a4c_ad').each(function(){
-	wk2 ={"top": $(this).css('top') ,"left": $(this).css('left'), "right": $(this).css('right'), "bottom": $(this).css('bottom')};
+	wk2 ={"top": $(this).css('top'), "right": $(this).css('right'), "bottom": $(this).css('bottom'), "left": $(this).css('left')};
     wk.push( wk2 );
 	ad_number++;
   });
-  console.log(wk2);
   chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": window.location.host});
 }
 
 function create_ad() {
   if(ad_number <= 5){
-	start_ad(  (ad_number * 130) + "px"  ,"100px", "auto", "auto");
-/*	
-	//Debug code for message numbers and an example of using our noty helper functions for displaying messages
-	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
-		noty(response.formated_message);
-	});
-*/
+	start_ad(  (ad_number * 130) + "px" , "auto", "auto", "100px");
   } else {
 	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only place five advertisements on each website.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
@@ -63,8 +55,12 @@ function create_ad() {
 }
 
 
-
-function start_ad(top, left, right, bottom, no_save) {
+function start_ad(top, right, bottom, left, no_save) {
+	/*	//Debug code for message numbers and an example of using our noty helper functions for displaying messages
+	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
+		noty(response.formated_message);
+	});
+	*/
 	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
 	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
 		$(".a4c_ad_new").disableSelection(); //prevents users from highlighting the panel/advertisement
@@ -127,32 +123,32 @@ function startup(){
 
 function startup_ads(data){
   for(i=0; i<data.positions.length; i++){
-    start_ad(data.positions[i].top,data.positions[i].left, data.positions[i].right, data.positions[i].bottom);
+    start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
   }
   if (ad_number == 1) { //if the user hasn't already placed ads on the page, automate them
 	  switch(data.auto_ads) {
-			//start_ad(top, left, right, bottom)
+			//start_ad(top, right, bottom, left)
 		  case 'topCorners':
+				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
-				start_ad("15px", "auto", "15px", "auto", 1);
 		  break;
 		  case 'bottomCorners':
-				start_ad("auto", "15px", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
+				start_ad("auto", "15px", "15px", "auto", 1);
 		  break;
 		  case 'allCorners':
-				start_ad("auto", "15px", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
+				start_ad("auto", "15px", "15px", "auto", 1);
+				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
-				start_ad("15px", "auto", "15px", "auto", 1);
 		  break;
 		  case 'rightCorners':
-				start_ad("auto", "auto", "15px", "15px", 1);
-				start_ad("15px", "auto", "15px", "auto", 1);
+				start_ad("auto", "15px", "15px", "auto", 1);
+				start_ad("15px", "15px", "auto", "auto", 1);
 		  break;
 		  case 'leftCorners':
-				start_ad("15px", "15px", "auto", "auto", 1);
-				start_ad("auto", "15px", "auto", "15px", 1);
+				start_ad("15px", "auto", "auto", "15px", 1);
+				start_ad("auto", "auto", "15px", "15px", 1);
 		}
   }
 }
@@ -177,10 +173,9 @@ chrome.extension.sendRequest({action: "get_charity"}, function(response){
 });
 startup();
 
-function remove_all_ads(){
+function remove_all_ads() {
   $('.a4c_ad').remove();
   save_ad_positions();
-  ad_number=1;
 }
 
 //keyboard shortcuts
