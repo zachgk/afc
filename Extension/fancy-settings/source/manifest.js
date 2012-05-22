@@ -5,7 +5,7 @@ this.manifest = {
     "settings": [
         {
             "tab": "Advertisements",
-            "group": "Automatic Advertisment Placement",
+            "group": "Automatic Advertisement Placement",
             "name": "autoAds",
             "type": "radioButtons",
             "label": "Once you move an advertisement, the template will be overridden for only that website. <br>To return to the default template or switch templates, remove all advertisements on that website.<br>",

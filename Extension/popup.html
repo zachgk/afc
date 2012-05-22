@@ -1,34 +1,5 @@
 <html>
-<style>
-html {
-  height: 300px;
-}
-body {
-  margin: 0px;
-  height: 300px;
-}
-button {
-  -webkit-transition: all .5s ease-out;
-  width: 300px;
-  height: 75px;
-  float: left;
-  border: none;
-  font-size: 20px;
-  background: #D4F5FE;
-}
-button:hover{
-  background: #9EE8FC;
-}
-button span {
-  font-size: 70%;
-  float: right;
-  margin-top: -11px;
-}
-
-button.half {
-  width: 150px;
-}
-</style>
+<link href="popup_styles.css" rel="stylesheet" type="text/css">
 <script>
 function close_popup() {
 	chrome.tabs.getSelected(null, function(tab) {
@@ -64,11 +35,9 @@ function remove_all(){
 
 </script>
 
-<button id='create' onclick="create()">Create Ad<br><span>Control+F3</button>
-<button id='remove_all' onclick="remove_all()">Remove Advertisements from this Website<br><span>Control+F2</span></button>
+<button id='create' onclick="create()" title="Control+F3">Create Ad</button>
+<button id='remove_all' onclick="remove_all()" title="Control+F2">Clear Ads on this Website</button>
 <button id='select' onclick="select()">Select a Charity</button>
 <button id='options' class="half" onclick="options();">Options</button>
 <button id='help' class="half"onclick="help()">Help</button>
 </html>
-
-

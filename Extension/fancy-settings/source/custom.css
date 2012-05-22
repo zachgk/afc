@@ -11,4 +11,5 @@ input.button {
   background: transparent;
   border: none;
   box-shadow: none;
+  cursor: auto;
 }
