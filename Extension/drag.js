@@ -71,10 +71,10 @@ function start_ad(top, right, bottom, left, no_save) {
 		});
 		enable_drag();
 		enable_remove();
+		ad_number++;
 		if (!no_save) {
 			save_ad_positions();
 		}
-		ad_number++;
 }
 
 function enable_guides() {
