@@ -37,7 +37,7 @@ function save_ad_positions(){
   ad_number = 1;
   wk = new Array();
   $('.a4c_ad').each(function(){
-	wk2 ={"top": $(this).css('top'), "right": $(this).css('right'), "bottom": $(this).css('bottom'), "left": $(this).css('left')};
+	wk2 = {"top": $(this).css('top'), "right": $(this).css('right'), "bottom": $(this).css('bottom'), "left": $(this).css('left')};
     wk.push( wk2 );
 	ad_number++;
   });
@@ -45,7 +45,7 @@ function save_ad_positions(){
 }
 
 function create_ad() {
-  if(ad_number <= 5){
+  if(ad_number <= 5) {
 	start_ad(  (ad_number * 130) + "px" , "auto", "auto", "100px");
   } else {
 	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only place five advertisements on each website.", type: "alert", time: 2000}, function(response){

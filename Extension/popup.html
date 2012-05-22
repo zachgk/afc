@@ -1,10 +1,14 @@
 <html>
 <style>
+html {
+  height: 300px;
+}
 body {
   margin: 0px;
+  height: 300px;
 }
 button {
-  -webkit-transition: all .25s ease-out;
+  -webkit-transition: all .5s ease-out;
   width: 300px;
   height: 75px;
   float: left;
@@ -12,12 +16,16 @@ button {
   font-size: 20px;
   background: #D4F5FE;
 }
-button:hover {
+button:hover{
   background: #9EE8FC;
-  font-size: 22px;
 }
 button span {
-  font-size: 80%;
+  font-size: 70%;
+  float: right;
+}
+
+button.half {
+  width: 150px;
 }
 </style>
 <script>
@@ -41,6 +49,11 @@ function help(){
   close_popup();  
 }
 
+function options(){
+  chrome.tabs.create({"url":chrome.extension.getURL("fancy-settings/source/index.html")});
+  close_popup();  
+}
+
 function remove_all(){
 	chrome.tabs.getSelected(null, function(tab) {
 		chrome.tabs.sendRequest(tab.id, {action: "remove_all_ads"});
@@ -50,10 +63,11 @@ function remove_all(){
 
 </script>
 
-<button id='create' onclick="create()">Create Ad<br><span>(or press Control+F3)</span></button>
-<button id='remove_all' onclick="remove_all()">Remove Advertisements from this Website<br><span>(or press Control+F2)</span></button>
+<button id='create' onclick="create()">Create Ad<br><span>Control+F3</button>
+<button id='remove_all' onclick="remove_all()">Remove Advertisements from this Website<br><span>Control+F2</span></button>
 <button id='select' onclick="select()">Select a Charity</button>
-<button id='help' onclick="help()">Help</button>
+<button id='options' class="half" onclick="options();">Options</button>
+<button id='help' class="half"onclick="help()">Help</button>
 </html>
 
 

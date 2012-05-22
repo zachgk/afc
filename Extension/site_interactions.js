@@ -15,8 +15,6 @@ function rewrite_personal_contributions(){
 	});
 }
 
-
-
 function update_current_charity() {
 	chrome.extension.sendRequest({action: "get_charity"}, function(response){
 	  current_charity = response.charity;
