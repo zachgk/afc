@@ -30,6 +30,14 @@ function save_ad_positions(data) {
   });
 }
 
+function remove_all_ads() {
+  var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+  db.transaction( function(tx) {
+    tx.executeSql('DELETE FROM site_positions');
+  });
+  console.log("Ads have been removed");
+}
+
 function startup_info(url) {
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
@@ -80,7 +88,11 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({"localStorage":localStorage});
   } else if(request.action == "display_message"){
     sendResponse({"formated_message":noty_message(request.message, request.type, request.time)});
-  } else{}
+  } else if(request.action == "remove_all_ads"){
+  	console.log("clearing ads recieved");
+    remove_all_ads();
+	sendResponse({});
+	} else{}
 });
 
 function noty_message(message, type, time) { //Helper function for creating Noty settings

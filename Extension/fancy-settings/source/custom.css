@@ -2,3 +2,13 @@
 // Add your own style rules here, not in css/main.css
 // or css/setting.css for easy updating reasons.
 */
+input.button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.setting.bundle.button, .setting.group-content, .container.button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
