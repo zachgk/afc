@@ -3,8 +3,11 @@ embed body {
 }
 
 .a4c_ad {
+  position: absolute;
   width: 125px;
   height: 123px;
+  z-index:10000;
+  background: transparent;
 }
 
 .a4c_ad span{
@@ -34,12 +37,6 @@ embed body {
   width: 126px;
   top: 131px;
   -webkit-transition: opacity 0.35s ease-out;
-}
-
-.a4c_ad_new {
-  position: absolute;
-  z-index:10000;
-  background: transparent;
 }
 
 #a4c_guide_box {

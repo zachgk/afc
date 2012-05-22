@@ -56,25 +56,23 @@ function create_ad() {
 
 
 function start_ad(top, right, bottom, left, no_save) {
-	/*	//Debug code for message numbers and an example of using our noty helper functions for displaying messages
+	/*	//Debug code for ad_numbers and an example of using our noty helper functions for displaying messages
 	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
 	});
 	*/
-	//we need to return different embed code for each ad, so ad_number will be an integer between 1 and 5
-	$('body').append("<div class='a4c_ad a4c_ad_new a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
-		$(".a4c_ad_new").disableSelection(); //prevents users from highlighting the panel/advertisement
-		$(".a4c_ad").hover(function(){
-			$(this).find(".a4c_panel").css("opacity", 0.85);
-		}, function() {
-			$(this).find(".a4c_panel").css("opacity", 0);
-		});
-		enable_drag();
-		enable_remove();
-		ad_number++;
-		if (!no_save) {
-			save_ad_positions();
-		}
+	$('body').append("<div class='a4c_ad a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
+	$(".a4c_ad").disableSelection().hover(function(){
+		$(this).find(".a4c_panel").css("opacity", 0.85);
+	}, function() {
+		$(this).find(".a4c_panel").css("opacity", 0);
+	});
+	enable_drag();
+	enable_remove();
+	ad_number++;
+	if (!no_save) {
+		save_ad_positions();
+	}
 }
 
 function enable_guides() {
