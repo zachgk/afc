@@ -1,4 +1,3 @@
-// SAMPLE
 this.manifest = {
     "name": "Ads4Charity",
     "icon": "icon48.png",
@@ -45,7 +44,14 @@ this.manifest = {
             "name": "no_charity_selected",
             "type": "checkbox",
             "label": 'Warning when no charity is selected.'
-        }
+        },
+		{
+			"tab": "Help",
+			"group":"Help",
+			"name":"Help",
+			"type":"description",
+			"label":"Sample Help Item"
+		}
 	],
 	    
 };

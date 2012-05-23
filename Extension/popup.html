@@ -11,16 +11,6 @@ function create(){
   close_popup();  
 }
 
-function select(){
-  chrome.tabs.create({"url":"http://ads4charity.org/charities"});
-  close_popup();  
-}
-
-function help(){
-  chrome.tabs.create({"url":"http://ads4charity.org/faq-page"});
-  close_popup();  
-}
-
 function options(){
   chrome.tabs.create({"url":chrome.extension.getURL("fancy-settings/source/index.html")});
   close_popup();  
@@ -36,7 +26,5 @@ function remove_all(){
 
 <button onclick="create()" title="Control+F3">Create Ad</button>
 <button onclick="remove_all()" title="Control+F2">Clear Ads on this Website</button>
-<button onclick="select()">Select a Charity</button>
 <button onclick="options();">Options</button>
-<button onclick="help()">Help</button>
 </html>
