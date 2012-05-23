@@ -5,7 +5,8 @@
 var wk, wk2;
 
 var settings = new Store("settings", {
-    "autoAds": "disabled"
+    "autoAds": "disabled",
+	"no_charity_selected": "checked"
 });
 
 function get_setting(setting) {
@@ -97,8 +98,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "remove_all_ads"){
     remove_all_ads();
 	sendResponse({});
-  } else if(request.action == "check_no_charity_views"){
-    sendResponse({"views":localStorage['noCharityViews']});
   } else{}
 });
 

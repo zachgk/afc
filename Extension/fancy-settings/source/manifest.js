@@ -38,6 +38,13 @@ this.manifest = {
             "name": "charities",
             "type": "description",
             "text": 'To choose a charity that you want your advertisement views to count towards, visit <a href="http://www.ads4charity.org/charities"> our website </a>.'
+        },
+		{
+            "tab": "Notifications",
+            "group": "Charities",
+            "name": "no_charity_selected",
+            "type": "checkbox",
+            "label": 'Warning when no charity is selected.'
         }
 	],
 	    

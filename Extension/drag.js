@@ -149,8 +149,9 @@ function startup_ads(data){
 				start_ad("auto", "auto", "15px", "15px", 1);
 		}
 	}
-	chrome.extension.sendRequest({action: "check_no_charity_views"}, function(response){
-		if (response.views > 10 && response.views % 10 === 0  ) { //if the users has loaded a page without a selected charity more than 10 times, display a warning message every 10 page loads
+	chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
+	var tempLocalStorage = response.localStorage;
+		if (tempLocalStorage.noCharityViews > 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "\"checked\"" ) { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
 			chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
 				noty(response.formated_message);
 		});
