@@ -1,41 +1,7 @@
-<script type="text/javascript">
-   (function(){function pw_load(){
-      if(arguments.callee.z)return;else arguments.callee.z=true;
-      var d=document;var s=d.createElement('script');
-      var x=d.getElementsByTagName('script')[0];
-      s.type='text/javascript';s.async=true;
-      s.src='//www.projectwonderful.com/pwa.js';
-      x.parentNode.insertBefore(s,x);}
-   if (window.attachEvent){
-    window.attachEvent('DOMContentLoaded',pw_load);
-    window.attachEvent('onload',pw_load);}
-   else{
-    window.addEventListener('DOMContentLoaded',pw_load,false);
-    window.addEventListener('load',pw_load,false);}})();
-</script>
-
 <?php 
-switch(intval($_GET["ad_number"])) {
-	case 1:
-		print '<div id="pw_adbox_63855_4_0"></div>';
-		break;
-	case 2:
-		print '<div id="pw_adbox_63856_4_0"></div>';
-		break;	
-	case 3:
-		print '<div id="pw_adbox_63858_4_0"></div>';
-		break;
-	case 4:
-		print '<div id="pw_adbox_63859_4_0"></div>';
-		break;
-	case 5:
-		print '<div id="pw_adbox_63860_4_0"></div>';
-		break;
-}
-
-if( ($charity = $_GET["charity"]) && intval($charity)){
+if( ($charity = $_GET["charity"]) && intval($charity) && $_GET["number"] <= 5){
   $mysqli = new mysqli("localhost", "zachki5_drplafc", "2weeks", "zachki5_drplafc");
-  $add_view_query = "UPDATE dr_field_data_field_charity_views SET field_charity_views_value=field_charity_views_value+1 WHERE entity_id=$charity";
+  $add_view_query = "UPDATE dr_field_data_field_charity_views SET field_charity_views_value=field_charity_views_value+".$_GET["number"]." WHERE entity_id=$charity";
   $mysqli->query($add_view_query);
 }
 ?>

@@ -49,6 +49,13 @@ function create_ad() {
 		noty(response.formated_message);
 	});
   }
+  server_views(1);
+}
+
+function server_views(number){
+  $.get("http://ads4charity.org/ad.php",{"charity":charity_selection,"number":number},function(data){
+    console.log(data);
+  });
 }
 
 
@@ -87,33 +94,40 @@ function pw_load() {
 }
 
 function startup_ads(data){
-	for(i=0; i<data.positions.length; i++){
-		start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
-	}
-	if (ad_number == 1) { //if the user hasn't already placed ads on the page, automate them
+	if(data.positions.length > 0){
+		for(i=0; i<data.positions.length; i++){
+			start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
+		}
+		server_views(data.positions.length);
+	} else {
 		switch(data.auto_ads) {
 			//start_ad(top, right, bottom, left)
 		  case 'topCorners':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
+				server_views(2);
 		  break;
 		  case 'bottomCorners':
 				start_ad("auto", "auto", "15px", "15px", 1);
 				start_ad("auto", "15px", "15px", "auto", 1);
+				server_views(2)
 		  break;
 		  case 'allCorners':
 				start_ad("auto", "auto", "15px", "15px", 1);
 				start_ad("auto", "15px", "15px", "auto", 1);
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
+				server_views(4);
 		  break;
 		  case 'rightCorners':
 				start_ad("auto", "15px", "15px", "auto", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
+				server_views(2);
 		  break;
 		  case 'leftCorners':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
+				server_views(2);
 		}
 	}
 	chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
