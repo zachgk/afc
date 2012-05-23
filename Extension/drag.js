@@ -1,7 +1,6 @@
 var wk ,wk2, charity_selection, auto_ads;
 var ad_number=1;
-
-var adCodes = ["63855", "63856", "63858", "63859", "63860"];
+var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 
 function enable_drag(){
   $('.a4c_ad').draggable({
@@ -22,10 +21,13 @@ function enable_drag(){
   });
 }
 
-function enable_remove(){
-  $('.a4c_remove').click(function(){
-    $(this).parent().parent().fadeOut().remove();
+function enable_remove() {
+	$('.a4c_remove').unbind("click");
+  $('.a4c_remove').click(function() {
+	console.log(ad_codes);
+	ad_codes.push($(this).parent().parent().attr("afc_ad_id"));
 	ad_number--;
+    $(this).parent().parent().fadeOut().remove();
 	save_ad_positions();
   });
 }
@@ -65,7 +67,9 @@ function start_ad(top, right, bottom, left, no_save) {
 		noty(response.formated_message);
 	});
 	*/
-	$('body').append("<div class='a4c_ad a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
+	var this_ad_number = Math.floor((Math.random()*(6 - ad_number)));
+	$('body').append("<div afc_ad_id=\"" + ad_codes[this_ad_number] + "\" class='a4c_ad a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src=\"" + chrome.extension.getURL("ads/" + ad_codes[this_ad_number] + ".html") + "\"><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
+	ad_codes.splice(this_ad_number, 1);
 	$(".a4c_ad").disableSelection().hover(function(){
 		$(this).find(".a4c_panel").css("opacity", 0.85);
 	}, function() {
