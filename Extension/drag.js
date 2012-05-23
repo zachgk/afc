@@ -120,11 +120,11 @@ function startup(){
 } 
 
 function startup_ads(data){
-  for(i=0; i<data.positions.length; i++){
-    start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
-  }
-  if (ad_number == 1) { //if the user hasn't already placed ads on the page, automate them
-	  switch(data.auto_ads) {
+	for(i=0; i<data.positions.length; i++){
+		start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
+	}
+	if (ad_number == 1) { //if the user hasn't already placed ads on the page, automate them
+		switch(data.auto_ads) {
 			//start_ad(top, right, bottom, left)
 		  case 'topCorners':
 				start_ad("15px", "auto", "auto", "15px", 1);
@@ -148,7 +148,14 @@ function startup_ads(data){
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
 		}
-  }
+	}
+	chrome.extension.sendRequest({action: "check_no_charity_views"}, function(response){
+		if (response.views > 10 && response.views % 10 === 0  ) { //if the users has loaded a page without a selected charity more than 10 times, display a warning message every 10 page loads
+			chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
+				noty(response.formated_message);
+		});
+		}
+	});
 }
 
   //End Functions and begin stuff loaded on page start
