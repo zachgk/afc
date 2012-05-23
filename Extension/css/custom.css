@@ -38,26 +38,3 @@ embed body {
   top: 131px;
   -webkit-transition: opacity 0.35s ease-out;
 }
-
-#a4c_guide_box {
-  display: none;
-}
-
-.a4c_drag_guide {
-  background: gray;
-  display: none;
-  z-index: 9999;
-}
-
-.a4c_enabled_guide {
-	display: block;
-	opacity: 0.35;
-}
-
-.a4c_right_guide {
-	right: 0px;
-}
-
-.a4c_left_guide {
-	left: 0px;
-}

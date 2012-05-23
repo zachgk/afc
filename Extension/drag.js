@@ -1,4 +1,4 @@
-var wk ,wk2, charity_selection, mouseX, auto_ads;
+var wk ,wk2, charity_selection, auto_ads;
 var ad_number=1;
 
 function enable_drag(){
@@ -7,18 +7,13 @@ function enable_drag(){
 	"handle":".a4c_move",
 	"stop":function(event, ui){
 	  $(this).addClass('a4c_idle');
-	  disable_guides();
 	  if ($(this).css("left").substring(0, $(this).css("left").length - 2) > $(window).width() / 2) {
 		$(this).css("right", $(window).width() - $(this).css("left").substring(0, $(this).css("left").length - 2) - 125	).css("left", "auto");
 	  }
 	  save_ad_positions();
 	},
 	"start":function(event,ui){
-      enable_guides();
 	  $(this).removeClass('a4c_idle');
-	},
-	"drag":function(event, ui) {
-	  update_guides();
 	},
 	"obstacle":".a4c_idle",
 	"preventCollision":true
@@ -75,48 +70,9 @@ function start_ad(top, right, bottom, left, no_save) {
 	}
 }
 
-function enable_guides() {
-	update_guides();
-	$("#a4c_guide_box").show();
-}
-
-function disable_guides() {
-	$("#a4c_guide_box").hide();
-}
-
-function update_guides() {
-	$(".a4c_left_guide").css({
-		'height' : $(window).height(),
-		'width' : $(window).width() / 2,
-	});
-	$(".a4c_right_guide").css({
-		'height' : $(window).height(),
-		'width' : $(window).width() / 2,
-	});
-	if (mouseX > ($(window).width() / 2)) {
-		$(".a4c_right_guide").addClass("a4c_enabled_guide");
-		$(".a4c_left_guide").removeClass("a4c_enabled_guide");
-	} else {
-		$(".a4c_right_guide").removeClass("a4c_enabled_guide");
-		$(".a4c_left_guide").addClass("a4c_enabled_guide");
-	}
-}
-
-$(document).mousemove(function(e){
-	mouseX = e.pageX;
-}); 
-
-$(window).resize(function() {
-	update_guides();
-});
-
 function startup(){
 	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});     
 	$("body").append('<div id="a4c_guide_box"><div class="a4c_left_guide a4c_drag_guide"></div><div class="a4c_right_guide a4c_drag_guide"></div></div>');
-	$(".a4c_drag_guide").css({
-		'position' : 'absolute',
-		'top' : '0px',
-	});
 } 
 
 function startup_ads(data){
