@@ -1,6 +1,8 @@
 var wk ,wk2, charity_selection, auto_ads;
 var ad_number=1;
 
+var adCodes = ["63855", "63856", "63858", "63859", "63860"];
+
 function enable_drag(){
   $('.a4c_ad').draggable({
     "containment":"body",
@@ -56,12 +58,13 @@ function start_ad(top, right, bottom, left, no_save) {
 		noty(response.formated_message);
 	});
 	*/
-	$('body').append("<div class='a4c_ad a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?ad_number="+ad_number+"&charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
+	$('body').append("<div class='a4c_ad a4c_idle' style='top: "+top+"; left: "+left+"; right: " + right + ";bottom: " + bottom +";'><embed src='http://ads4charity.org/ad.php?charity="+charity_selection+"'><div class='a4c_panel'><span title='Remove this advertisement' class='a4c_remove'></span><span title='Move this advertisement' class='a4c_move'></span></div></div>");
 	$(".a4c_ad").disableSelection().hover(function(){
 		$(this).find(".a4c_panel").css("opacity", 0.85);
 	}, function() {
 		$(this).find(".a4c_panel").css("opacity", 0);
 	});
+	pw_load();
 	enable_drag();
 	enable_remove();
 	ad_number++;
@@ -71,9 +74,17 @@ function start_ad(top, right, bottom, left, no_save) {
 }
 
 function startup(){
-	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});     
-	$("body").append('<div id="a4c_guide_box"><div class="a4c_left_guide a4c_drag_guide"></div><div class="a4c_right_guide a4c_drag_guide"></div></div>');
-} 
+	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});
+}
+
+function pw_load() {
+	if(arguments.callee.z)return;else arguments.callee.z=true;
+	var d=document;var s=d.createElement('script');
+      var x=d.getElementsByTagName('script')[0];
+      s.type='text/javascript';s.async=true;
+      s.src='//www.projectwonderful.com/pwa.js';
+      x.parentNode.insertBefore(s,x);
+}
 
 function startup_ads(data){
 	for(i=0; i<data.positions.length; i++){
