@@ -29,5 +29,6 @@
   ],
     
   "background_page": "background.html",
-  "options_page": "fancy-settings/source/index.html"
+  "options_page": "fancy-settings/source/index.html",
+  "offline_enabled": false
 }
