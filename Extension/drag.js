@@ -117,10 +117,10 @@ function startup_ads(data){
 				server_views(2)
 		  break;
 		  case 'allCorners':
-				start_ad("auto", "auto", "15px", "15px", 1);
-				start_ad("auto", "15px", "15px", "auto", 1);
-				start_ad("15px", "auto", "auto", "15px", 1);
-				start_ad("15px", "15px", "auto", "auto", 1);
+				start_ad("auto", "auto", "15px", "15px", 1);//bottom left
+				start_ad("auto", "15px", "15px", "auto", 1);//bottom right
+				start_ad("15px", "auto", "auto", "15px", 1);//top left
+				start_ad("15px", "15px", "auto", "auto", 1);//top right
 				server_views(4);
 		  break;
 		  case 'rightCorners':
@@ -174,7 +174,5 @@ window.addEventListener("keydown", function(event) {
   var modifier = event.ctrlKey || event.metaKey;   // Bind to both command (for Mac) and control (for Win/Linux)
   if (modifier && event.keyCode == 114) { //F3
 	create_ad();
-  } else if (modifier && event.keyCode == 113) {  //F2
-	remove_all_ads();
   }
 }, false);

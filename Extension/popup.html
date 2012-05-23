@@ -22,9 +22,42 @@ function remove_all(){
 	});
   close_popup();  
 }
+
+function blacklist(){
+
+}
+
+function startup_check(){
+	chrome.tabs.getSelected(null,function(tab) {
+		var url = tab.url;
+		var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+		db.transaction( function(tx){
+			tx.executeSql('SELECT * FROM site_positions WHERE site = "'+ url +'"',[], function(tx, results){
+			  button_correction(results.rows.length);     
+			});
+	  });
+	});
+}
+
+function button_correction(ad_number){
+  console.log(ad_number);
+  if(ad_number > 0){
+	document.getElementById("remove_all").style.display="inline";
+  } else if(localStorage['store.settings.autoAds'] != '"disabled"') {
+    document.getElementById("blacklist").style.display="inline";
+  }
+}
+
+
+
 </script>
 
 <button onclick="create()" title="Control+F3">Create Ad</button>
-<button onclick="remove_all()" title="Control+F2">Clear Ads on this Website</button>
+<button id="remove_all" onclick="remove_all()" title="Control+F2" style='display: none;'>Revert to template</button>
+<button id="blacklist" onclick="blacklist()" title="Control+F2" style='display: none;'>Show no ads on this page</button>
 <button onclick="options();">Options</button>
+
+<script>
+startup_check();
+</script>
 </html>
