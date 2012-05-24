@@ -21,7 +21,6 @@ function revert(){
 		chrome.tabs.sendRequest(tab.id, {action: "remove_all_ads"});
 		chrome.tabs.sendRequest(tab.id, {action:"get_url"}, function(response){
 			var url = response.url;
-			console.log(url);
 			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
 			db.transaction( function(tx){
 				tx.executeSql('DELETE FROM blacklist WHERE url = "'+ url +'"');
@@ -35,7 +34,6 @@ function blacklist(){
 	chrome.tabs.getSelected(null,function(tab) {
 		chrome.tabs.sendRequest(tab.id, {action:"get_url"}, function(response){
 			var url = response.url;
-			console.log(tab);
 			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
 			db.transaction( function(tx){
 				tx.executeSql('INSERT INTO blacklist(url) VALUES("'+ url +'") ');
@@ -47,7 +45,7 @@ function blacklist(){
 
 function startup_check(){
 	chrome.tabs.getSelected(null,function(tab) {
-		var url = tab.url;
+		chrome.tabs.sendRequest(tab.id, {action:"get_url"}, function(response){		var url = response.url;
 		var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
 		db.transaction( function(tx){
 			tx.executeSql('SELECT * FROM site_positions WHERE site = "'+ url +'"',[], function(tx, results){
@@ -55,32 +53,30 @@ function startup_check(){
 		});
 	  });
 	});
+	});
 }
 
-function is_blacklisted(url, ad_number){
+function is_blacklisted(url, number_of_ads){
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('SELECT * FROM blacklist WHERE url = "'+ url +'"',[], function(tx, results){
-	  console.log('blacklisted is ' + results.rows.length);
-	  blacklist_check_exception(url, ad_number, results.rows.length);
+	  blacklist_check_exception(url, number_of_ads, results.rows.length);
     });
   });
 }
 
-function blacklist_check_exception(url, ad_number, blacklisted){
+function blacklist_check_exception(url, number_of_ads, blacklisted){
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx) {
-    tx.executeSql('SELECT * FROM blacklist WHERE url = "'+ url +'"',[], function(tx, results){
-	  button_correction(ad_number, blacklisted + results.rows.length);
+    tx.executeSql('SELECT * FROM exceptions WHERE url = "'+ url +'"',[], function(tx, results){
+	  button_correction(number_of_ads, blacklisted + results.rows.length);
 	});
   });
 }
 
-function button_correction(ad_number, blacklisted){
-  console.log('blacklisted = ' + blacklisted);
-  console.log('ad_number = ' + ad_number);
-  if(ad_number == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){
-	document.getElementById("blacklist").style.display="inline";
+function button_correction(number_of_ads, blacklisted){
+  if (number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){
+        document.getElementById("blacklist").style.display="inline"; 
   } else{
     document.getElementById("revert").style.display="inline";
   }
