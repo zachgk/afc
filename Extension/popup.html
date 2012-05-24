@@ -37,6 +37,7 @@ function blacklist(){
 			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
 			db.transaction( function(tx){
 				tx.executeSql('INSERT INTO blacklist(url) VALUES("'+ url +'") ');
+				close_popup();
 			});
 		});
 		chrome.tabs.sendRequest(tab.id, {action: "remove_all_ads"});
@@ -75,19 +76,42 @@ function blacklist_check_exception(url, number_of_ads, blacklisted){
 }
 
 function button_correction(number_of_ads, blacklisted){
-  if (number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){
+	console.log(number_of_ads + "    " + blacklisted + "      " + localStorage['store.settings.autoAds']);
+/**  if (number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){  //no manual ads, using a template
         document.getElementById("blacklist").style.display="inline"; 
-  } else{
-    document.getElementById("revert").style.display="inline";
   }
+  if ( localStorage['store.settings.autoAds'] == '"disabled"' && number_of_ads != 0){ //template disabled and overidden
+  }
+  if ( localStorage['store.settings.autoAds'] != '"disabled"' && number_of_ads == 0){ //template enabled and no ads
+		//document.getElementById("revert").style.display="inline";
+  }  
+**/
+
+		//noty message refresh page
+  if (number_of_ads != 0 && localStorage['store.settings.autoAds'] != '"disabled"') {
+		document.getElementById("revert").style.display="inline";
+  }
+  if (number_of_ads != 0 && localStorage['store.settings.autoAds'] == '"disabled"') {
+		document.getElementById("revert").style.display="inline";
+      	document.getElementById("revert").innerHTML = 'Remove all Ads';      
+  }   
+  if (blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"') {
+		document.getElementById("revert").style.display="inline";
+  }
+  if (!blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"') {
+		document.getElementById("blacklist").style.display="inline";
+      	document.getElementById("blacklist").innerHTML = 'Hide Ads []';
+  }
+//  console.log(blacklisted + "    " + number_of_ads);
+  
 }
 
 
 </script>
 
 <button onclick="create()" title="Control+F3">Create Ad</button>
-<button id="revert" onclick="revert()" title="Control+F2" style='display: none;'>Revert to template</button>
-<button id="blacklist" onclick="blacklist()" title="Control+F2"style='display: none;'>Show no ads on this page</button>
+<button id="blacklist" onclick="blacklist()" title="Control+F2"style='display: none;'>Hide Advertisements</button>
+<button id="revert" onclick="revert()" title="Control+F2" style='display: none;'>Revert to Template</button>
 <button onclick="options();">Options</button>
 
 <script>
