@@ -100,10 +100,8 @@ function button_correction(number_of_ads, blacklisted){
   }
   if (!blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"') {
 		document.getElementById("blacklist").style.display="inline";
-      	document.getElementById("blacklist").innerHTML = 'Hide Ads []';
+      	document.getElementById("blacklist").innerHTML = 'Hide Ads';
   }
-//  console.log(blacklisted + "    " + number_of_ads);
-  
 }
 
 
