@@ -30,7 +30,6 @@ function get_setting(setting) {
 }
 
 function request_create(){
-	increase_charity_views(1);
     chrome.tabs.getSelected(null, function(tab) {
       chrome.tabs.sendRequest(tab.id, {action: "create"});
     });
@@ -95,7 +94,6 @@ function startup_info(url) {
 }
 
 function startup_ads(positions){
-	increase_charity_views(positions.length);
 	chrome.tabs.getSelected(null, function(tab) {
 		chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions, "auto_ads": get_setting('autoAds')});
 	});
@@ -139,6 +137,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({"formated_message":noty_message(request.message, request.type, request.time)});
   } else if(request.action == "remove_all_ads"){
     remove_all_ads();
+	sendResponse({});
+  } else if(request.action == "increase_local_views"){
+    increase_charity_views(request.amount);
 	sendResponse({});
   } else{}
 });

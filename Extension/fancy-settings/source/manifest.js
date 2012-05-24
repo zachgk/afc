@@ -3,7 +3,7 @@ this.manifest = {
     "icon": "icon48.png",
     "settings": [
         {
-            "tab": "Advertisements",
+            "tab": "General",
             "group": "Automatic Advertisement Placement",
             "name": "autoAds",
             "type": "radioButtons",
@@ -18,21 +18,21 @@ this.manifest = {
 			]
 		},
 		{
-            "tab": "Advertisements",
+            "tab": "General",
             "group": "Clear Custom Advertisement Positions",
             "name": "remove_description",
             "type": "description",
             "text": 'This setting clears any advertisements that you have manually placed.<br>If you are using a template, all websites will now use it again.'
         },
 		{
-            "tab": "Advertisements",
+            "tab": "General",
             "group": "Clear Custom Advertisement Positions",
             "name": "remove_all",
             "type": "button",
             "text": "Clear Custom Advertisement Positions",
        },
 		{
-            "tab": "Charities",
+            "tab": "General",
             "group": "Charity Selection",
             "name": "charities",
             "type": "description",

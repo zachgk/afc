@@ -55,6 +55,7 @@ function create_ad() {
 
 function server_views(number){
   $.get("http://ads4charity.org/ad.php",{"charity":charity_selection,"number":number});
+  chrome.extension.sendRequest({"action": "increase_local_views","amount":number});
 }
 
 
