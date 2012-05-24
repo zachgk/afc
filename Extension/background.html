@@ -59,7 +59,6 @@ function startup_info(url) {
 }
 
 function startup_ads(positions){
-	increase_charity_views(positions.length);
 	chrome.tabs.getSelected(null, function(tab) {
 		chrome.tabs.sendRequest(tab.id, {action: "startup_ads", "positions": positions, "auto_ads": get_setting('autoAds')});
 	});
@@ -104,6 +103,8 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "remove_all_ads"){
     remove_all_ads();
 	sendResponse({});
+  } else if(request.action == "increase_charity_views") {
+	increase_charity_views(request.views - 1);
   } else{}
 });
 
