@@ -1,3 +1,11 @@
+var a4c_help_text = '<ol>\
+<li>Download the extension from the Google Chrome Webstore.</li>\
+<li>Go to the options page by clicking on the icon and selecting the button that says \"Options\".</li>\
+<li>If you want advertisements to be automatically placed, select a template (it is recommended).</li>\
+<li>Click on the \"Select your Charity\" button at the bottom to choose which charity you want your web browsing to count towards.</li>\
+<li>On your favorite charity, press the corresponding blue \"Select this Charity\" button to the right.</li>\
+</ol>';
+
 this.manifest = {
     "name": "Ads4Charity",
     "icon": "icon48.png",
@@ -54,10 +62,19 @@ this.manifest = {
         },
 		{
 			"tab": "Help",
-			"group":"Help",
+			"group":"Steps for getting started",
 			"name":"Help",
 			"type":"description",
-			"label":"Sample Help Item"
+			"label":"Sample Help Item",
+			"text":a4c_help_text
+		},
+		{
+			"tab": "Help",
+			"group":"FAQ",
+			"name":"FAQ",
+			"type":"description",
+			"label":"Sample Help Item",
+			"text":"If you have more questions, take a look at the <a href='http://ads4charity.org/faq-page'>FAQ page</a> on our website."
 		}
 	],
 	    
