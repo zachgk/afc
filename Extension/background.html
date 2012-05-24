@@ -11,7 +11,7 @@ var settings = new Store("settings", {
 
 function initialization(){
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
-  var to_exclude = ["ads4charity.org","docs.google.com","drive.google.com"];
+  var to_exclude = ["ads4charity.org"];
   db.transaction( function(tx){
     tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(site, top, left, right, bottom)');
 	tx.executeSql('CREATE TABLE IF NOT EXISTS exceptions(url)');
@@ -71,7 +71,7 @@ function is_blacklisted(url){
 function blacklist_check_exception(url){
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx) {
-    tx.executeSql('SELECT * FROM blacklist WHERE url = "'+ url +'"',[], function(tx, results){
+    tx.executeSql('SELECT * FROM exceptions WHERE url = "'+ url +'"',[], function(tx, results){
 	  if(results.rows.length == 0) startup_ads(wk);
 	});
   });
