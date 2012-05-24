@@ -156,7 +156,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   }  else if(request.action == "remove_all_ads"){
     remove_all_ads();
     sendResponse({});
-  } else {}
+  } else if(request.action == "get_url"){
+    sendResponse({"url":window.location.host});
+  }  else {}
 });
 
 chrome.extension.sendRequest({action: "get_charity"}, function(response){

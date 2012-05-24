@@ -11,8 +11,14 @@ var settings = new Store("settings", {
 
 function initialization(){
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+  var to_exclude = ["ads4charity.org","docs.google.com","drive.google.com"];
   db.transaction( function(tx){
-    tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(site, top, left, right, bottom)');	
+    tx.executeSql('CREATE TABLE IF NOT EXISTS site_positions(site, top, left, right, bottom)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS exceptions(url)');
+	tx.executeSql('CREATE TABLE IF NOT EXISTS blacklist(url)');
+	for(var i=0; i<to_exclude.length; i++){
+	  tx.executeSql('INSERT INTO exceptions(url) VALUES("'+ to_exclude[i] +'") ');
+	}
   });
 }
 
@@ -25,6 +31,15 @@ function request_create(){
     chrome.tabs.getSelected(null, function(tab) {
       chrome.tabs.sendRequest(tab.id, {action: "create"});
     });
+	chrome.tabs.getSelected(null,function(tab) {
+		chrome.tabs.sendRequest(tab.id, {action:"get_url"}, function(response){
+			var url = response.url;
+			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+			db.transaction( function(tx){
+				tx.executeSql('DELETE FROM blacklist WHERE url = "'+ url +'"');
+			});
+		});
+	});
 }
 
 function save_ad_positions(data) {
@@ -44,6 +59,24 @@ function remove_all_ads() {
   });
 }
 
+function is_blacklisted(url){
+  var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+  db.transaction( function(tx){
+    tx.executeSql('SELECT * FROM blacklist WHERE url = "'+ url +'"',[], function(tx, results){
+	  if(results.rows.length == 0) blacklist_check_exception(url);
+    });
+  });
+}
+
+function blacklist_check_exception(url){
+  var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+  db.transaction( function(tx) {
+    tx.executeSql('SELECT * FROM blacklist WHERE url = "'+ url +'"',[], function(tx, results){
+	  if(results.rows.length == 0) startup_ads(wk);
+	});
+  });
+}
+
 function startup_info(url) {
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
@@ -53,7 +86,7 @@ function startup_info(url) {
         wk2 = {top: results.rows.item(i).top, left: results.rows.item(i).left, right: results.rows.item(i).right, bottom: results.rows.item(i).bottom}; 
         wk.push ( wk2 );        
       }
-      startup_ads(wk);     
+      is_blacklisted(url)     
     });
   });
 }
