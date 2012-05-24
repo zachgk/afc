@@ -1,0 +1,63 @@
+<?php
+function money_divide_menu() {
+  $items = array();
+
+  $items['money_divide'] = array(
+    'title' => 'Money Divider',
+    'description' => 'Configuration for Current posts module',
+    'page callback' => 'money_divide_page',
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+
+  function money_divide_page() {
+		return drupal_get_form('money_divide_form');
+  }
+
+function money_divide_form(&$form_state) {
+  $form['money_entered'] = array(
+  '#type' => 'textfield',
+  '#title' => t('Amount Raised Total'),
+  '#default_value' => t('0'),
+  '#size' => 60,
+);
+$form['submit'] = array('#type' => 'submit', '#value' => t('Calculate'));
+
+  return $form;
+}
+function money_divide_form_submit($form, &$form_state) {
+	$string = '';
+	$total_views = 0;
+	for ($i = 0; $i < 100; $i++) {
+		$node = node_load($i);
+		if ($node) {
+			if ($node->type != "charities") continue;
+			$data['nid'] = $node->nid;
+			$data['previous_views'] = $node->field_previous_views['und'][0]['value'];
+			$data['current_views'] = $node->field_charity_views['und'][0]['value'];
+			$data['views'] = $data['current_views'] - $data['previous_views'];
+			$total_views+= $data['views'];
+			$charities[] = $data;
+		}
+	}
+	foreach($charities as $charity){
+	  $charity['owed_fraction'] = $charity['views'] / $total_views;
+	  $charity['owed'] = $charity['owed_fraction'] * $form_state['values']['money_entered'];
+	  $node = node_load($charity['nid']);
+	  $node->field_amount_owed['und'][0]['value']+=$charity['owed'];
+	  $node->field_amount_rasied['und'][0]['value']= floatval($node->field_amount_rasied['und'][0]['value']) + $charity['owed'];
+	  $node->field_previous_views['und'][0]['value'] = $charity['current_views'];
+	  node_save($node);
+	  $string .= $node->title . "(" . $node->nid . ") has been allocated $" . $charity['owed'] . " which was for " . $charity['views'] . " views.\n";
+	}
+	$string .= 'The total amount given to all charities was $' . $form_state['values']['money_entered'] . ' and from ' . $total_views . ' views.';
+	$record->title = 'Money Allocation Record from ' .date('F j, Y');
+	$record->body['und'][0]['value'] = $string;
+	$record->type = 'charity_records';
+	node_save($record);
+	drupal_set_message(l("A record", "node/".$record->nid) . ' has been automatically created for this entry.');
+}

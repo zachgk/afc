@@ -1,0 +1,4 @@
+name = Money Divide
+description = Automatically divies up the money we have raised for each charity
+core = 7.x
+version = 1.0
