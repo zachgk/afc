@@ -22,7 +22,7 @@
 	  "run_at": "document_end"
     },
 	{
-      "matches": ["http://ads4charity.org/*"],
+      "matches": ["http://www.ads4charity.org/charities"],
 	  "js": [  "site_interactions.js"],
 	  "run_at": "document_end"
     }

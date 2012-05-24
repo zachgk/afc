@@ -24,7 +24,6 @@ function enable_drag(){
 function enable_remove() {
 	$('.a4c_remove').unbind("click");
   $('.a4c_remove').click(function() {
-	console.log(ad_codes);
 	ad_codes.push($(this).parent().parent().attr("afc_ad_id"));
 	ad_number--;
     $(this).parent().parent().fadeOut().remove();
@@ -55,9 +54,7 @@ function create_ad() {
 }
 
 function server_views(number){
-  $.get("http://ads4charity.org/ad.php",{"charity":charity_selection,"number":number},function(data){
-    console.log(data);
-  });
+  $.get("http://ads4charity.org/ad.php",{"charity":charity_selection,"number":number});
 }
 
 
@@ -75,7 +72,6 @@ function start_ad(top, right, bottom, left, no_save) {
 	}, function() {
 		$(this).find(".a4c_panel").css("opacity", 0);
 	});
-	pw_load();
 	enable_drag();
 	enable_remove();
 	ad_number++;
@@ -86,15 +82,6 @@ function start_ad(top, right, bottom, left, no_save) {
 
 function startup(){
 	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});
-}
-
-function pw_load() {
-	if(arguments.callee.z)return;else arguments.callee.z=true;
-	var d=document;var s=d.createElement('script');
-      var x=d.getElementsByTagName('script')[0];
-      s.type='text/javascript';s.async=true;
-      s.src='//www.projectwonderful.com/pwa.js';
-      x.parentNode.insertBefore(s,x);
 }
 
 function startup_ads(data){
@@ -142,6 +129,7 @@ function startup_ads(data){
 		});
 		}
 	});
+	chrome.extension.sendRequest({action: "increase_charity_views", views: ad_number});
 }
 
   //End Functions and begin stuff loaded on page start

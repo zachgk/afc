@@ -57,16 +57,6 @@ function startup_check(){
 	});
 }
 
-function button_correction(ad_number, blacklisted){
-  console.log('blacklisted = ' + blacklisted);
-  console.log('ad_number = ' + ad_number);
-  if(ad_number == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){
-	document.getElementById("blacklist").style.display="inline";
-  } else{
-    document.getElementById("revert").style.display="inline";
-  }
-}
-
 function is_blacklisted(url, ad_number){
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
@@ -85,6 +75,17 @@ function blacklist_check_exception(url, ad_number, blacklisted){
 	});
   });
 }
+
+function button_correction(ad_number, blacklisted){
+  console.log('blacklisted = ' + blacklisted);
+  console.log('ad_number = ' + ad_number);
+  if(ad_number == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){
+	document.getElementById("blacklist").style.display="inline";
+  } else{
+    document.getElementById("revert").style.display="inline";
+  }
+}
+
 
 </script>
 
