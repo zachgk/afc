@@ -39,7 +39,7 @@ function save_ad_positions(){
     wk.push( wk2 );
 	ad_number++;
   });
-  chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": window.location.host});
+  chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": window.location.host.replace('www.','') });
 }
 
 function create_ad() {
@@ -81,7 +81,7 @@ function start_ad(top, right, bottom, left, no_save) {
 }
 
 function startup(){
-	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host});
+	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host.replace('www.','') });
 }
 
 function startup_ads(data){
@@ -145,7 +145,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     remove_all_ads();
     sendResponse({});
   } else if(request.action == "get_url"){
-    sendResponse({"url":window.location.host});
+    sendResponse({"url": window.location.host.replace('www.','') });
   }  else {}
 });
 
