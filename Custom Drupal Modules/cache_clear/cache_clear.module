@@ -1,0 +1,4 @@
+<?php
+cache_clear_cron() {
+	drupal_flush_all_caches(); 
+}

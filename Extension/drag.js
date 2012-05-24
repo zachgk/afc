@@ -24,7 +24,6 @@ function enable_drag(){
 function enable_remove() {
 	$('.a4c_remove').unbind("click");
   $('.a4c_remove').click(function() {
-	console.log(ad_codes);
 	ad_codes.push($(this).parent().parent().attr("afc_ad_id"));
 	ad_number--;
     $(this).parent().parent().fadeOut().remove();
