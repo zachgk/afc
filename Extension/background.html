@@ -46,7 +46,7 @@ function save_ad_positions(data) {
   var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
   db.transaction( function(tx){
     tx.executeSql('DELETE FROM site_positions WHERE site = "' + data.url + '"');
-    for(i=0; i<data.positions.length ;i++){
+    for(i=0; i<data.positions.length && i<5;i++){
       tx.executeSql('INSERT INTO site_positions(site, top, left, right, bottom) VALUES ("' + data.url + '", "'+ data.positions[i].top +'", "'+ data.positions[i].left+'", "'+ data.positions[i].right+'", "'+ data.positions[i].bottom + '")');
     }
   });
@@ -123,7 +123,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     save_ad_positions(request);
     sendResponse({});
   } else if(request.action == "request_startup_info"){
-    startup_info(request.url)
+    startup_info(request.url);
     sendResponse({});
   } else if(request.action == "set_charity"){
     localStorage.charity = request.charity;

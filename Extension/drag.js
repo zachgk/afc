@@ -1,4 +1,4 @@
-var wk ,wk2, charity_selection, auto_ads;
+var wk ,wk2, charity_selection, auto_ads, url;
 var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 
@@ -39,7 +39,7 @@ function save_ad_positions(){
     wk.push( wk2 );
 	ad_number++;
   });
-  chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": window.location.host.replace('www.','') });
+  chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": url });
 }
 
 function create_ad() {
@@ -59,6 +59,7 @@ function server_views(number){
 
 
 function start_ad(top, right, bottom, left, no_save) {
+	if (ad_number > 6) return false;
 	/*	//Debug code for ad_numbers and an example of using our noty helper functions for displaying messages
 	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
@@ -81,7 +82,9 @@ function start_ad(top, right, bottom, left, no_save) {
 }
 
 function startup(){
-	chrome.extension.sendRequest({action: "request_startup_info", "url": window.location.host.replace('www.','') });
+    url = window.location.host;
+	url.replace('www.','');
+	chrome.extension.sendRequest({action: "request_startup_info", "url": url });
 }
 
 function startup_ads(data){
@@ -145,7 +148,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     remove_all_ads();
     sendResponse({});
   } else if(request.action == "get_url"){
-    sendResponse({"url": window.location.host.replace('www.','') });
+    sendResponse({"url": url });
   }  else {}
 });
 
@@ -153,6 +156,7 @@ chrome.extension.sendRequest({action: "get_charity"}, function(response){
   charity_selection = response.charity;
 });
 startup();
+
 
 function remove_all_ads() {
   $('.a4c_ad').remove();
