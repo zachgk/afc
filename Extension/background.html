@@ -21,6 +21,8 @@ function initialization(){
 	  tx.executeSql('INSERT INTO exceptions(url) VALUES("'+ to_exclude[i] +'") ');
 	}
   });
+  var current_time = new Date();
+  localStorage['startCharityViewsTime'] = current_time.getTime();
 }
 
 function get_setting(setting) {
@@ -149,8 +151,8 @@ function noty_message(message, type, time) { //Helper function for creating Noty
 	return {"text":message,"layout":"topRight","type":type,"animateOpen":{"height":"toggle"},"animateClose":{"height":"toggle"},"speed":500,"timeout":time,"closeButton":true,"closeOnSelfClick":true,"closeOnSelfOver":false,"modal":false};  //return the formatted options
 }
 
-if(!localStorage['initialized']){
-  initialization()
+if(!localStorage['startCharityViewsTime']){
+  initialization();
 }
 
 </script>
