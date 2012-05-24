@@ -46,6 +46,13 @@ this.manifest = {
             "label": 'Warning when no charity is selected.'
         },
 		{
+            "tab": "Notifications",
+            "group": "Advertisements",
+            "name": "revert_notification",
+            "type": "checkbox",
+            "label": 'Remind me to refresh the page when I switch back to a template.'
+        },
+		{
 			"tab": "Help",
 			"group":"Help",
 			"name":"Help",

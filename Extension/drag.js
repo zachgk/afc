@@ -1,4 +1,4 @@
-var wk ,wk2, charity_selection, auto_ads, url;
+var wk ,wk2, charity_selection, auto_ads, url, tempLocalStorage;
 var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 
@@ -126,8 +126,8 @@ function startup_ads(data){
 		}
 	}
 	chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
-	var tempLocalStorage = response.localStorage;
-		if (tempLocalStorage.noCharityViews > 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "\"checked\"" ) { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
+	tempLocalStorage = response.localStorage;
+		if (tempLocalStorage.noCharityViews > 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
 			chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
 				noty(response.formated_message);
 		});
@@ -150,7 +150,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "get_url"){
     sendResponse({"url": url });
-  }  else if(request.action == "revert_message"){
+  } else if(request.action == "revert_message" && tempLocalStorage["store.settings.revert_notification"] == "true"){
 	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the " + auto_ads + " template."}, function(response){
 		noty(response.formated_message);
 	});
