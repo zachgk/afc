@@ -22,8 +22,13 @@
 	  "run_at": "document_end"
     },
 	{
-      "matches": ["*://ads4charity.org/charities", "*://www.ads4charity.org/charities"],
+      "matches": ["*://ads4charity.org/*", "*://www.ads4charity.org/*"],
 	  "js": [  "site_interactions.js"],
+	  "run_at": "document_end"
+    },
+	{
+      "matches": ["*://ads4charity.org/charities", "*://www.ads4charity.org/charities"],
+	  "js": [  "dashboard.js"],
 	  "run_at": "document_end"
     }
   ],
