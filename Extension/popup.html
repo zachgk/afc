@@ -24,6 +24,7 @@ function revert(){
 			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
 			db.transaction( function(tx){
 				tx.executeSql('DELETE FROM blacklist WHERE url = "'+ url +'"');
+				revert_message();
 				close_popup();
 			});
 		});
@@ -76,18 +77,6 @@ function blacklist_check_exception(url, number_of_ads, blacklisted){
 }
 
 function button_correction(number_of_ads, blacklisted){
-	console.log(number_of_ads + "    " + blacklisted + "      " + localStorage['store.settings.autoAds']);
-/**  if (number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"disabled"' && !blacklisted){  //no manual ads, using a template
-        document.getElementById("blacklist").style.display="inline"; 
-  }
-  if ( localStorage['store.settings.autoAds'] == '"disabled"' && number_of_ads != 0){ //template disabled and overidden
-  }
-  if ( localStorage['store.settings.autoAds'] != '"disabled"' && number_of_ads == 0){ //template enabled and no ads
-		//document.getElementById("revert").style.display="inline";
-  }  
-**/
-
-		//noty message refresh page
   if (number_of_ads != 0 && localStorage['store.settings.autoAds'] != '"disabled"') {
 		document.getElementById("revert").style.display="inline";
   }
@@ -104,6 +93,11 @@ function button_correction(number_of_ads, blacklisted){
   }
 }
 
+function revert_message() {
+  chrome.tabs.getSelected(null,function(tab) {
+		chrome.tabs.sendRequest(tab.id, {action: "revert_message"});
+	});		
+}
 
 </script>
 

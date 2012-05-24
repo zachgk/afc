@@ -94,7 +94,8 @@ function startup_ads(data){
 		}
 		server_views(data.positions.length);
 	} else {
-		switch(data.auto_ads) {
+		auto_ads = data.auto_ads;
+		switch(auto_ads) {
 			//start_ad(top, right, bottom, left)
 		  case 'topCorners':
 				start_ad("15px", "auto", "auto", "15px", 1);
@@ -149,6 +150,11 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "get_url"){
     sendResponse({"url": url });
+  }  else if(request.action == "revert_message"){
+	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the " + auto_ads + " template."}, function(response){
+		noty(response.formated_message);
+	});
+    sendResponse({});
   }  else {}
 });
 
