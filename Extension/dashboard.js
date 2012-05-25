@@ -16,19 +16,11 @@ function rewrite_personal_contributions() {
 	$(".view-display-id-page_1 ").before("<center><h3>At your current rate, you're raising a total of $" + Math.round(total_per_year) + " per year.</h3></center>");
 }
 
-function update_current_charity() {
-	chrome.extension.sendRequest({action: "get_charity"}, function(response){
-	  current_charity = response.charity;
-	  charity_row_update();
-	});
-}
-
 chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
   background_local_storage = response.localStorage;
   	var current_time = new Date();
 	time_diff = current_time.getTime() - background_local_storage['startCharityViewsTime'];
-  rewrite_personal_contributions();
-	
+    rewrite_personal_contributions();
 });
 
 $('.select-charity').click(function(e){
@@ -39,10 +31,17 @@ $('.select-charity').click(function(e){
   update_current_charity();
 });
 
+function update_current_charity() {
+	chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
+	    background_local_storage = response.localStorage;
+		current_charity = background_local_storage.charity;
+	  charity_row_update();
+	});
+}
+
 function charity_row_update() {
-  $(".views-field-nid-1 span").text('Select this Charity').css("opacity", .45).parent().parent().css("background", "#f3f3f3");
-  $(".view-display-id-page_1").find('.views-field-nid-1 span[data-cid="'+current_charity+'"]').text('Charity Selected').css("opacity", 1).parent().parent();
-  //css("background", "green");
+  $(".views-field-nid-1 span").text('Select this Charity').css("opacity", .45);
+  $(".view-display-id-page_1").find('.views-field-nid-1 span[data-cid="'+current_charity+'"]').text('Charity Selected').css("opacity", 1);
 }
 
 function get_charity_name() {

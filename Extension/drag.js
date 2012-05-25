@@ -1,4 +1,4 @@
-var wk ,wk2, charity_selection, auto_ads, url, tempLocalStorage;
+var wk ,wk2, auto_ads, url, tempLocalStorage;
 var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 
@@ -31,12 +31,12 @@ function enable_remove() {
   });
 }
 
-function save_ad_positions(){
+function save_ad_positions() {
   ad_number = 1;
   wk = new Array();
   $('.a4c_ad').each(function(){
 	wk2 = {"top": $(this).css('top'), "right": $(this).css('right'), "bottom": $(this).css('bottom'), "left": $(this).css('left')};
-    wk.push( wk2 );
+    wk.push(wk2);
 	ad_number++;
   });
   chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": url });
@@ -50,14 +50,8 @@ function create_ad() {
 		noty(response.formated_message);
 	});
   }
-  server_views(1);
+  chrome.extension.sendRequest({"action": "increase_charity_views","amount":1});
 }
-
-function server_views(number){
-  $.get("http://ads4charity.org/ad.php",{"charity":charity_selection,"number":number});
-  chrome.extension.sendRequest({"action": "increase_local_views","amount":number});
-}
-
 
 function start_ad(top, right, bottom, left, no_save) {
 	if (ad_number > 6) return false;
@@ -93,7 +87,6 @@ function startup_ads(data){
 		for(i=0; i<data.positions.length; i++){
 			start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
 		}
-		server_views(data.positions.length);
 	} else {
 		auto_ads = data.auto_ads;
 		switch(auto_ads) {
@@ -101,40 +94,35 @@ function startup_ads(data){
 		  case 'topCorners':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
-				server_views(2);
 		  break;
 		  case 'bottomCorners':
 				start_ad("auto", "auto", "15px", "15px", 1);
 				start_ad("auto", "15px", "15px", "auto", 1);
-				server_views(2)
 		  break;
 		  case 'allCorners':
 				start_ad("auto", "auto", "15px", "15px", 1);//bottom left
 				start_ad("auto", "15px", "15px", "auto", 1);//bottom right
 				start_ad("15px", "auto", "auto", "15px", 1);//top left
 				start_ad("15px", "15px", "auto", "auto", 1);//top right
-				server_views(4);
 		  break;
 		  case 'rightCorners':
 				start_ad("auto", "15px", "15px", "auto", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
-				server_views(2);
 		  break;
 		  case 'leftCorners':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
-				server_views(2);
 		}
 	}
 	chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 	tempLocalStorage = response.localStorage;
-		if (tempLocalStorage.noCharityViews > 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
+		if (tempLocalStorage.noCharityViews >= 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
 			chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
 				noty(response.formated_message);
 		});
 		}
 	});
-	chrome.extension.sendRequest({action: "increase_charity_views", views: ad_number});
+	chrome.extension.sendRequest({action: "increase_charity_views", amount: (ad_number-1)});
 }
 
   //End Functions and begin stuff loaded on page start
@@ -159,11 +147,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   }  else {}
 });
 
-chrome.extension.sendRequest({action: "get_charity"}, function(response){
-  charity_selection = response.charity;
-});
 startup();
-
 
 function remove_all_ads() {
   $('.a4c_ad').remove();

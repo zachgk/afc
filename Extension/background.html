@@ -1,5 +1,6 @@
 <html>
 <script type="text/javascript" src="fancy-settings/source/lib/store.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.6.2.min.js"></script>
 <script>
 
 var wk, wk2;
@@ -106,7 +107,9 @@ function startup_ads(positions){
 	}
 }
 
-function increase_charity_views(amount){
+function increase_charity_views(amount){ //handles local and server
+	console.log("sending charity " + localStorage.charity + " " + amount  + " views");
+  $.get("http://ads4charity.org/ad.php",{"charity":localStorage.charity,"number":amount});
   if(localStorage['charity-' + localStorage.charity ]){
     localStorage['charity-' + localStorage.charity ]= Number(localStorage['charity-' + localStorage.charity ]) + amount;
   } else {
@@ -126,11 +129,6 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "request_startup_info"){
     startup_info(request.url);
     sendResponse({});
-  } else if(request.action == "set_charity"){
-    localStorage.charity = request.charity;
-    sendResponse({});
-  } else if(request.action == "get_charity"){
-    sendResponse({"charity":localStorage.charity});
   } else if(request.action == "get_local_storage"){
     sendResponse({"localStorage":localStorage});
   } else if(request.action == "display_message"){
@@ -138,9 +136,12 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "remove_all_ads"){
     remove_all_ads();
 	sendResponse({});
-  } else if(request.action == "increase_local_views"){
+  } else if(request.action == "increase_charity_views"){
     increase_charity_views(request.amount);
 	sendResponse({});
+  } else if(request.action == "set_charity"){
+    localStorage.charity = request.charity;
+    sendResponse({});
   } else{}
 });
 
