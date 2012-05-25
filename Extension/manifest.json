@@ -23,7 +23,8 @@
     },
 	{
       "matches": ["*://ads4charity.org/*", "*://www.ads4charity.org/*"],
-	  "js": [  "site_interactions.js"],
+	  "js": ["site_interactions.js"],
+	  "css": ["css/site_interactions.css"],
 	  "run_at": "document_end"
     },
 	{

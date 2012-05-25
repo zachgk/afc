@@ -1,0 +1,7 @@
+/* 
+.a4c_extension_show - the extension shows this text
+.a4c_extension_hide - the extension hides this text
+*/
+
+.a4c_extension_show { display: inline !important; } 
+.a4c_extension_hide { display: none !important; } 
