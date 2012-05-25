@@ -61,5 +61,8 @@ function money_divide_form_submit($form, &$form_state) {
 	$record->field_total_allocated['und'][0]['value'] = $form_state['values']['money_entered'];
 	$record->field_number_charities['und'][0]['value'] = count($charities);
 	node_save($record);
+	$previous_amount_raised = variable_get("amount_raised");
+	$new_amount_raised = $previous_amount_raised + $form_state['values']['money_entered'];
+	variable_set("amount_raised", $new_amount_raised);
 	drupal_set_message(l("A record", "node/".$record->nid) . ' has been automatically created for this entry.');
 }
