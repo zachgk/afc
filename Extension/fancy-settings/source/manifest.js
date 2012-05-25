@@ -10,6 +10,13 @@ this.manifest = {
     "name": "Ads4Charity",
     "icon": "icon48.png",
     "settings": [
+		{
+            "tab": "General",
+            "group": "Charity Options",
+            "name": "charity_select",
+            "type": "button",
+            "text": 'Select a Charity'
+        },
         {
             "tab": "General",
             "group": "Automatic Advertisement Placement",
@@ -39,13 +46,6 @@ this.manifest = {
             "type": "button",
             "text": "Clear Custom Advertisement Positions",
        },
-		{
-            "tab": "General",
-            "group": "Charity Selection",
-            "name": "charities",
-            "type": "description",
-            "text": 'To choose a charity that you want your advertisement views to count towards, visit <a href="http://www.ads4charity.org/charities"> our website </a>.'
-        },
 		{
             "tab": "Notifications",
             "group": "Charities",

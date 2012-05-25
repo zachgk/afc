@@ -18,6 +18,9 @@
 					noty(response.formated_message);
 				});
 			});
+			$("#charity_select").before("<span style='font-weight:normal;'>You can visit our website to pick a charity that you want your browsing to count towards.</span><br>").click(function() {
+				window.location = "http://www.ads4charity.org/dashboard";
+			});
 		});
 	});
 })(jQuery);
