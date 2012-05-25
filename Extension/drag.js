@@ -16,7 +16,7 @@ function enable_drag(){
 	"start":function(event,ui){
 	  $(this).removeClass('a4c_idle');
 	},
-	"obstacle":".a4c_idle",
+	"obstacle":".a4c_idle,#watch-video",//blocks our adds, youtube videos
 	"preventCollision":true
   });
 }
