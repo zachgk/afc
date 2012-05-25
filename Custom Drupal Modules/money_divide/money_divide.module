@@ -58,6 +58,8 @@ function money_divide_form_submit($form, &$form_state) {
 	$record->title = 'Money Allocation Record from ' .date('F j, Y');
 	$record->body['und'][0]['value'] = $string;
 	$record->type = 'charity_records';
+	$record->field_total_allocated['und'][0]['value'] = $form_state['values']['money_entered'];
+	$record->field_number_charities['und'][0]['value'] = count($charities);
 	node_save($record);
 	drupal_set_message(l("A record", "node/".$record->nid) . ' has been automatically created for this entry.');
 }
