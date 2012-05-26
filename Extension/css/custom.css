@@ -8,19 +8,23 @@ embed body {
   height: 123px;
   z-index:10000;
   background: transparent;
+  overflow: hidden;
 }
 
 .a4c_ad span{
   padding-left: 18px;
 }
 
-.a4c_remove {
+.a4c_ad .a4c_remove {
   cursor: pointer;
+  background-position-y: -3px;
 }
 
 .a4c_ad .a4c_move{
   cursor: move;
-  margin-left: 86px;
+  margin-left: 84px;
+  background-position-y: -1px;
+  background-position-x: -1px;
 }
 
 .a4c_ad embed {
