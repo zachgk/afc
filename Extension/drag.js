@@ -1,6 +1,7 @@
 var wk ,wk2, auto_ads, url, tempLocalStorage;
 var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
+var startup_runs = 0;
 
 function enable_drag(){
   $('.a4c_ad').draggable({
@@ -83,6 +84,7 @@ function startup(){
 }
 
 function startup_ads(data){
+    if(startup_runs > 0) return false;
 	if(data.positions.length > 0){
 		for(i=0; i<data.positions.length; i++){
 			start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
@@ -123,6 +125,7 @@ function startup_ads(data){
 		}
 	});
 	chrome.extension.sendRequest({action: "increase_charity_views", amount: (ad_number-1)});
+	startup_runs++;
 }
 
   //End Functions and begin stuff loaded on page start
