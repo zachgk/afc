@@ -24,12 +24,12 @@ this.manifest = {
             "type": "radioButtons",
             "label": "Once you move an advertisement, the template will be overridden for only that website. <br>To return to the default template or switch templates, remove all advertisements on that website.<br>",
             "options": [
-				["disabled", "No Automation"],
-				["allCorners", "All Corners"],
-				["topCorners", "Top Corners"],
-				["bottomCorners", "Bottom Corners"],
-				["rightCorners", "Right Corners"],
-				["leftCorners", "Left Corners"],
+				["No Automation"],
+				["Top Corners"],
+				["Bottom Corners"],
+				["All Corners"],
+				["Right Corners"],
+				["Left Corners"],
 			]
 		},
 		{

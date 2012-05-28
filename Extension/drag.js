@@ -1,4 +1,4 @@
-var wk ,wk2, auto_ads, url, tempLocalStorage;
+var wk ,wk2, url, tempLocalStorage;
 var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 var startup_runs = 0;
@@ -23,7 +23,7 @@ function enable_drag(){
 }
 
 function enable_remove() {
-	$('.a4c_remove').unbind("click");
+  $('.a4c_remove').unbind("click");
   $('.a4c_remove').click(function() {
 	ad_codes.push($(this).parent().parent().attr("afc_ad_id"));
 	ad_number--;
@@ -45,11 +45,13 @@ function save_ad_positions() {
 
 function create_ad() {
   if(ad_number <= 5) {
-	start_ad(  (ad_number * 130) + "px" , "auto", "auto", "100px");
+	start_ad( (ad_number * 130) + "px" , "auto", "auto", "100px");
+    enable_drag();
+	enable_remove();
   } else {
 	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only place five advertisements on each website.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
-	});
+    });
   }
   chrome.extension.sendRequest({"action": "increase_charity_views","amount":1});
 }
@@ -69,8 +71,6 @@ function start_ad(top, right, bottom, left, no_save) {
 	}, function() {
 		$(this).find(".a4c_panel").css("opacity", 0);
 	});
-	enable_drag();
-	enable_remove();
 	ad_number++;
 	if (!no_save) {
 		save_ad_positions();
@@ -90,28 +90,27 @@ function startup_ads(data){
 			start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
 		}
 	} else {
-		auto_ads = data.auto_ads;
-		switch(auto_ads) {
+		switch(tempLocalStorage["store.settings.autoAds"]) {
 			//start_ad(top, right, bottom, left)
-		  case 'topCorners':
+		  case 'Top Corners':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
 		  break;
-		  case 'bottomCorners':
+		  case 'Bottom Corners':
 				start_ad("auto", "auto", "15px", "15px", 1);
 				start_ad("auto", "15px", "15px", "auto", 1);
 		  break;
-		  case 'allCorners':
+		  case 'All Corners':
 				start_ad("auto", "auto", "15px", "15px", 1);//bottom left
 				start_ad("auto", "15px", "15px", "auto", 1);//bottom right
 				start_ad("15px", "auto", "auto", "15px", 1);//top left
 				start_ad("15px", "15px", "auto", "auto", 1);//top right
 		  break;
-		  case 'rightCorners':
+		  case 'Right Corners':
 				start_ad("auto", "15px", "15px", "auto", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
 		  break;
-		  case 'leftCorners':
+		  case 'Left Corners':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
 		}
@@ -124,6 +123,8 @@ function startup_ads(data){
 		});
 		}
 	});
+	enable_drag();
+	enable_remove();
 	chrome.extension.sendRequest({action: "increase_charity_views", amount: (ad_number-1)});
 	startup_runs++;
 }
@@ -143,7 +144,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "get_url"){
     sendResponse({"url": url });
   } else if(request.action == "revert_message" && tempLocalStorage["store.settings.revert_notification"] == "true"){
-	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the " + auto_ads + " template."}, function(response){
+	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the <i>" + auto_ads + "</i> template."}, function(response){
 		noty(response.formated_message);
 	});
     sendResponse({});
