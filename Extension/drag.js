@@ -3,6 +3,15 @@ var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 var startup_runs = 0;
 
+chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
+	tempLocalStorage = response.localStorage;
+	if (tempLocalStorage.noCharityViews >= 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
+		chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
+			noty(response.formated_message);
+		});
+	}
+});
+
 function enable_drag(){
   $('.a4c_ad').draggable({
     "containment":"body",
@@ -91,38 +100,29 @@ function startup_ads(data){
 		}
 	} else {
 		switch(tempLocalStorage["store.settings.autoAds"]) {
-			//start_ad(top, right, bottom, left)
-		  case 'Top Corners':
+		  case '"Top Corners"':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
 		  break;
-		  case 'Bottom Corners':
+		  case '"Bottom Corners"':
 				start_ad("auto", "auto", "15px", "15px", 1);
 				start_ad("auto", "15px", "15px", "auto", 1);
 		  break;
-		  case 'All Corners':
+		  case '"All Corners"':
 				start_ad("auto", "auto", "15px", "15px", 1);//bottom left
 				start_ad("auto", "15px", "15px", "auto", 1);//bottom right
 				start_ad("15px", "auto", "auto", "15px", 1);//top left
 				start_ad("15px", "15px", "auto", "auto", 1);//top right
 		  break;
-		  case 'Right Corners':
+		  case '"Right Corners"':
 				start_ad("auto", "15px", "15px", "auto", 1);
 				start_ad("15px", "15px", "auto", "auto", 1);
 		  break;
-		  case 'Left Corners':
+		  case '"Left Corners"':
 				start_ad("15px", "auto", "auto", "15px", 1);
 				start_ad("auto", "auto", "15px", "15px", 1);
 		}
 	}
-	chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
-	tempLocalStorage = response.localStorage;
-		if (tempLocalStorage.noCharityViews >= 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
-			chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
-				noty(response.formated_message);
-		});
-		}
-	});
 	enable_drag();
 	enable_remove();
 	chrome.extension.sendRequest({action: "increase_charity_views", amount: (ad_number-1)});
