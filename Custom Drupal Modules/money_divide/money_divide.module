@@ -32,17 +32,15 @@ $form['submit'] = array('#type' => 'submit', '#value' => t('Calculate'));
 function money_divide_form_submit($form, &$form_state) {
 	$string = '';
 	$total_views = 0;
-	for ($i = 0; $i < 100; $i++) {
-		$node = node_load($i);
-		if ($node) {
-			if ($node->type != "charities") continue;
+	$result = db_query('SELECT n.nid FROM {node} n WHERE n.type = :type', array(':type' => 'charities'));
+	foreach ($result as $charity) {
+			$node = node_load($charity->nid);
 			$data['nid'] = $node->nid;
 			$data['previous_views'] = $node->field_previous_views['und'][0]['value'];
 			$data['current_views'] = $node->field_charity_views['und'][0]['value'];
 			$data['views'] = $data['current_views'] - $data['previous_views'];
 			$total_views+= $data['views'];
 			$charities[] = $data;
-		}
 	}
 	foreach($charities as $charity){
 	  $charity['owed_fraction'] = $charity['views'] / $total_views;
