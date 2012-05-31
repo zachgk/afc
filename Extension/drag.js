@@ -1,4 +1,4 @@
-var wk ,wk2, url, tempLocalStorage;
+var all_ad_positions, ad_position, url, tempLocalStorage;
 var ad_number=1;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 var startup_runs = 0;
@@ -43,10 +43,10 @@ function enable_remove() {
 
 function save_ad_positions() {
   ad_number = 1;
-  wk = new Array();
+  all_ad_positions = new Array();
   $('.a4c_ad').each(function(){
-	wk2 = {"top": $(this).css('top'), "right": $(this).css('right'), "bottom": $(this).css('bottom'), "left": $(this).css('left')};
-    wk.push(wk2);
+	ad_position = {"top": $(this).css('top'), "right": $(this).css('right'), "bottom": $(this).css('bottom'), "left": $(this).css('left')};
+    all_ad_positions.push(ad_position);
 	ad_number++;
   });
   chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": url });
@@ -66,7 +66,7 @@ function create_ad() {
 }
 
 function start_ad(top, right, bottom, left, no_save) {
-	if (ad_number > 6) return false;
+	if (ad_number > 6) return;
 	/*	//Debug code for ad_numbers and an example of using our noty helper functions for displaying messages
 	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
@@ -93,7 +93,7 @@ function startup(){
 }
 
 function startup_ads(data){
-    if(startup_runs > 0) return false;
+    if(startup_runs > 0) return;
 	if(data.positions.length > 0){
 		for(i=0; i<data.positions.length; i++){
 			start_ad(data.positions[i].top,data.positions[i].right, data.positions[i].bottom, data.positions[i].left);
