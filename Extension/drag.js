@@ -5,7 +5,7 @@ var startup_runs = 0;
 chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 	tempLocalStorage = response.localStorage;
 	if (tempLocalStorage.noCharityViews >= 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
-		chrome.extension.sendRequest({action: "display_message", message: "It looks like you haven't selected a charity yet.  Click on the heart-shaped icon in the top right corner and click on \"Select a Charity\".", type: "error", time: 4000}, function(response){
+		chrome.extension.sendRequest({action: "display_message", message: 'It looks like you haven\'t selected a charity yet.  Click on the "Select a Charity" button in the options page.', type: "error", time: 4000}, function(response){
 			noty(response.formated_message);
 		});
 	}
