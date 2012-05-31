@@ -49,7 +49,7 @@ function save_ad_positions() {
     all_ad_positions.push(ad_position);
 	ad_number++;
   });
-  chrome.extension.sendRequest({action: "save_ad_positions", "positions": wk, "url": url });
+  chrome.extension.sendRequest({action: "save_ad_positions", "positions": all_ad_positions, "url": url });
 }
 
 function create_ad() {
