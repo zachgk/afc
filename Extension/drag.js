@@ -132,6 +132,7 @@ function startup_ads(data){
   //End Functions and begin stuff loaded on page start
 
 chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
+	console.log(tempLocalStorage["store.settings.revert_notification"]);
   if(request.action == "create"){
     create_ad();
     sendResponse({});
@@ -144,7 +145,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "get_url"){
     sendResponse({"url": url });
   } else if(request.action == "revert_message" && tempLocalStorage["store.settings.revert_notification"] == "true"){
-	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the <i>" + auto_ads + "</i> template."}, function(response){
+	console.log("revert message recieved and verified");
+	var ad_template_name = tempLocalStorage["store.settings.autoAds"].substr(1);
+	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the <i>" + ad_template_name.substr(0, ad_template_name.length-1) + "</i> template.", time:3000}, function(response){
 		noty(response.formated_message);
 	});
     sendResponse({});

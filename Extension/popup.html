@@ -77,17 +77,18 @@ function blacklist_check_exception(url, number_of_ads, blacklisted){
 }
 
 function button_correction(number_of_ads, blacklisted){
-  if (number_of_ads != 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //using template, with ads
+  if (number_of_ads != 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //using template, with manual ads
     document.getElementById("revert").style.display="inline";
   }
-  if (number_of_ads != 0 && localStorage['store.settings.autoAds'] == '"No Automation"') { //no template, with ads
+  if (number_of_ads != 0 && localStorage['store.settings.autoAds'] == '"No Automation"') { //no template, with manual ads
     document.getElementById("revert").style.display="inline";
     document.getElementById("revert").innerHTML = 'Remove all Ads';      
   }   
-  if (blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //blacklisted, no ads, using template
+  if (blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //blacklisted, no manual ads, using template
     document.getElementById("revert").style.display="inline";
+    document.getElementById("revert").innerHTML = 'Show Ads';      
   }
-  if (!blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //not blacklisted, no ads, using template
+  if (!blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //not blacklisted, no manual ads, using template
     document.getElementById("blacklist").style.display="inline";
     document.getElementById("blacklist").innerHTML = 'Hide Ads';
   }
