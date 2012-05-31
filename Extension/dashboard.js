@@ -24,10 +24,10 @@ chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 });
 
 $('.select-charity').click(function(e){
-  chrome.extension.sendRequest({action: "display_message", message: "Your advertisement views are now counting towards " + get_charity_name() + ".", time:2500}, function(response){
+  chrome.extension.sendRequest({action: "display_message", message: "Your advertisement views are now counting towards " + $(this).attr('data-name') + ".", time:2500}, function(response){
     noty(response.formated_message);
   });
-  chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid'), "name": get_charity_name()});
+  chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid'), "name": $(this).attr('data-name')});
   update_current_charity();
 });
 
@@ -42,10 +42,6 @@ function update_current_charity() {
 function charity_row_update() {
   $(".views-field-nid-1 span").text('Select this Charity').css("opacity", .45);
   $(".view-display-id-page_1").find('.views-field-nid-1 span[data-cid="'+current_charity+'"]').text('Charity Selected').css("opacity", 1);
-}
-
-function get_charity_name() {
-  return $('.views-field-nid-1 span[data-cid="'+current_charity+'"]').attr("data-name");
 }
 
 update_current_charity();
