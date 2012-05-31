@@ -24,7 +24,6 @@ function revert(){
 			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
 			db.transaction( function(tx){
 				tx.executeSql('DELETE FROM blacklist WHERE url = "'+ url +'"');
-				revert_message();
 				close_popup();
 			});
 		});
@@ -88,7 +87,7 @@ function button_correction(number_of_ads, blacklisted){
   }   
   if (blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //blacklisted, no manual ads, using template
     document.getElementById("revert").style.display="inline";
-    document.getElementById("revert").innerHTML = 'Show Ads';      
+    document.getElementById("revert").innerHTML = 'Show Ads';
   }
   if (!blacklisted && number_of_ads == 0 && localStorage['store.settings.autoAds'] != '"No Automation"') { //not blacklisted, no manual ads, using template
     document.getElementById("blacklist").style.display="inline";
@@ -96,17 +95,15 @@ function button_correction(number_of_ads, blacklisted){
   }
 }
 
-function revert_message() {
+function reload() {
   chrome.tabs.getSelected(null,function(tab) {
-		chrome.tabs.sendRequest(tab.id, {action: "revert_message"});
-	});		
+    chrome.tabs.sendRequest(tab.id, {action: "reload"});
+  });		
 }
-
 </script>
-
 <button onclick="create()" title="Control+F3">Create Ad</button>
 <button id="blacklist" onclick="blacklist()" title="Control+F2"style='display: none;'>Hide Advertisements</button>
-<button id="revert" onclick="revert()" title="Control+F2" style='display: none;'>Revert to Template</button>
+<button id="revert" onclick="revert();reload();" title="Control+F2" style='display: none;'>Revert to Template</button>
 <button onclick="options();">Options</button>
 
 <script>

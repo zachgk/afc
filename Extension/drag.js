@@ -1,5 +1,4 @@
-var all_ad_positions, ad_position, url, tempLocalStorage;
-var ad_number=1;
+var all_ad_positions, ad_position, url, tempLocalStorage, ad_number;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 var startup_runs = 0;
 
@@ -86,10 +85,17 @@ function start_ad(top, right, bottom, left, no_save) {
 	}
 }
 
-function startup(){
-    url = window.location.host;
-	url.replace('www.','');
-	chrome.extension.sendRequest({action: "request_startup_info", "url": url });
+function startup() {
+  ad_number=1;
+  url = window.location.host;
+  url.replace('www.','');
+  chrome.extension.sendRequest({action: "request_startup_info", "url": url });
+}
+
+function remove_all_ads() {
+  ad_codes = ["63855", "63856", "63858", "63859", "63860"];
+  $('.a4c_ad').remove();
+  save_ad_positions();
 }
 
 function startup_ads(data){
@@ -143,21 +149,20 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "get_url"){
     sendResponse({"url": url });
+  } else if(request.action == "reload"){
+    startup_runs = 0;
+	startup();
+	sendResponse({});
   } else if(request.action == "revert_message" && tempLocalStorage["store.settings.revert_notification"] == "true"){
 	var ad_template_name = tempLocalStorage["store.settings.autoAds"].substr(1);
 	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the <i>" + ad_template_name.substr(0, ad_template_name.length-1) + "</i> template.", time:3000}, function(response){
 		noty(response.formated_message);
 	});
     sendResponse({});
-  }  else {}
+  } else {}
 });
 
 startup();
-
-function remove_all_ads() {
-  $('.a4c_ad').remove();
-  save_ad_positions();
-}
 
 //keyboard shortcuts
 window.addEventListener("keydown", function(event) {
