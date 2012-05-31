@@ -21,6 +21,11 @@
 			$("#charity_select").before("<span style='font-weight:normal;'>You can visit our website to pick a charity that you want your browsing to count towards.</span><br>").click(function() {
 				window.location = "http://www.ads4charity.org/dashboard";
 			});
+			if (localStorage['charityName']) {
+			  $("#charity_select").after("<br><span style='font-weight:normal;'>Your're advertisement revenue is currently going towards <strong>" + localStorage['charityName'] + "</strong>.</span>");
+			} else {
+			  $("#charity_select").after("<br><span style='font-weight:normal;'>You haven't selected a charity yet.</span>");
+			}
 		});
 	});
 })(jQuery);

@@ -140,6 +140,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 	sendResponse({});
   } else if(request.action == "set_charity"){
     localStorage.charity = request.charity;
+	localStorage.charityName = request.name;
     sendResponse({});
   } else{}
 });
