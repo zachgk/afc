@@ -1,14 +1,14 @@
 {
   "name": "Ads4Charity",
-  "version":"1.0.1",
-  "description":"Extension that puts adds on your computer for charity",
+  "version":"1.0.2",
+  "description":"Donate to Charities by Surfing the Web",
   "permissions": [
     "tabs", "<all_urls>"
   ],  
   "browser_action": {
     "default_popup": "popup.html",
 	"default_icon":"icons/icon16.png"
-  },
+  },   
   "icons": { 
 			"16": "icons/icon16.png",
 			"48": "icons/icon48.png",
