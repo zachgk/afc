@@ -1,6 +1,6 @@
 {
-  "name": "Ads for Charity",
-  "version":"1.0",
+  "name": "Ads4Charity",
+  "version":"1.0.1",
   "description":"Extension that puts adds on your computer for charity",
   "permissions": [
     "tabs", "<all_urls>"
