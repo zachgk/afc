@@ -31,17 +31,13 @@ function revert(){
 }
 
 function blacklist(){
-	chrome.tabs.getSelected(null,function(tab) {
-		chrome.tabs.sendRequest(tab.id, {action:"get_url"}, function(response){
-			var url = response.url;
-			var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
-			db.transaction( function(tx){
-				tx.executeSql('INSERT INTO blacklist(url) VALUES("'+ url +'") ');
-				close_popup();
-			});
-		});
-		chrome.tabs.sendRequest(tab.id, {action: "remove_all_ads"});
+  chrome.tabs.getSelected(null,function(tab) {
+    chrome.tabs.sendRequest(tab.id, {action:"get_url"}, function(response){
+      chrome.extension.sendRequest({action: "blacklist_current_site", "url": response.url });
+      chrome.tabs.sendRequest(tab.id, {action: "remove_all_ads"});
+      close_popup();
 	});
+  });
 }
 
 function startup_check(){

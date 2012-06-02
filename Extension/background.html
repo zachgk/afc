@@ -116,6 +116,13 @@ function increase_charity_views(amount){ //handles local and server
   }
 }
 
+function blacklist_current_site(url){
+  var db = openDatabase('a4c_db','1.0','adsforcharity database', 5*1024*1024);
+  db.transaction( function(tx){
+    tx.executeSql('INSERT INTO blacklist(url) VALUES("'+ url +'") ');
+  });
+}
+
     //Message passing functions
 
 chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
@@ -124,6 +131,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
     sendResponse({});
   } else if(request.action == "save_ad_positions"){
     save_ad_positions(request);
+    sendResponse({});
+  } else if(request.action == "blacklist_current_site"){
+    blacklist_current_site(request.url);
     sendResponse({});
   } else if(request.action == "request_startup_info"){
     startup_info(request.url);
