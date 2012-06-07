@@ -147,6 +147,9 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
   } else if(request.action == "startup_ads"){
     startup_ads(request);
     sendResponse({});
+  } else if(request.action == "no_startup"){
+    startup_runs++;
+    sendResponse({});
   }  else if(request.action == "remove_all_ads"){
     remove_all_ads();
     sendResponse({});

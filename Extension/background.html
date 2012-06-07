@@ -67,6 +67,7 @@ function is_blacklisted(url){
   db.transaction( function(tx){
     tx.executeSql('SELECT * FROM blacklist WHERE url = "'+ url +'"',[], function(tx, results){
 	  if(results.rows.length == 0) blacklist_check_exception(url);
+	  else no_setup_message();
     });
   });
 }
@@ -76,8 +77,15 @@ function blacklist_check_exception(url){
   db.transaction( function(tx) {
     tx.executeSql('SELECT * FROM exceptions WHERE url = "'+ url +'"',[], function(tx, results){
 	  if(results.rows.length == 0) startup_ads(wk);
+	  else no_setup_message();
 	});
   });
+}
+
+function no_setup_message(){
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {action: "no_startup"});
+	});
 }
 
 function startup_info(url) {
