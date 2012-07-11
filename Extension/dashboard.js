@@ -16,7 +16,7 @@ function rewrite_personal_contributions() {
   $(".view-display-id-page_1 ").before("<center><h3>At your current rate, you're raising a total of $" + Math.round(total_per_year) + " per year.</h3></center>");
 }
 
-chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
+chrome.extension.sendMessage({action: "get_local_storage"}, function(response){
   background_local_storage = response.localStorage;
   var current_time = new Date();
   time_diff = current_time.getTime() - background_local_storage['startCharityViewsTime'];
@@ -24,15 +24,15 @@ chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
 });
 
 $('.select-charity').click(function(e){
-  chrome.extension.sendRequest({action: "display_message", message: "Your advertisement views are now counting towards " + $(this).attr('data-name') + ".", time:2500}, function(response){
+  chrome.extension.sendMessage({action: "display_message", message: "Your advertisement views are now counting towards " + $(this).attr('data-name') + ".", time:2500}, function(response){
     noty(response.formated_message);
   });
-  chrome.extension.sendRequest({action: "set_charity", "charity": $(this).attr('data-cid'), "name": $(this).attr('data-name')});
+  chrome.extension.sendMessage({action: "set_charity", "charity": $(this).attr('data-cid'), "name": $(this).attr('data-name')});
   update_current_charity();
 });
 
 function update_current_charity() {
-  chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
+  chrome.extension.sendMessage({action: "get_local_storage"}, function(response){
     background_local_storage = response.localStorage;
     current_charity = background_local_storage.charity;
     charity_row_update();

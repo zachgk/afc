@@ -2,10 +2,10 @@ var all_ad_positions, ad_position, url, tempLocalStorage, ad_number;
 var ad_codes = ["63855", "63856", "63858", "63859", "63860"];
 var startup_runs = 0;
 
-chrome.extension.sendRequest({action: "get_local_storage"}, function(response){
+chrome.extension.sendMessage({action: "get_local_storage"}, function(response){
 	tempLocalStorage = response.localStorage;
 	if (tempLocalStorage.noCharityViews >= 10 && tempLocalStorage.noCharityViews % 10 === 0 && tempLocalStorage["store.settings.no_charity_selected"] == "true") { //if the users has loaded a page without a selected charity more than 10 times, and if the setting is checked, display a warning message every 10 page loads
-		chrome.extension.sendRequest({action: "display_message", message: 'It looks like you haven\'t selected a charity yet.  Click on the "Select a Charity" button in the options page.', type: "error", time: 4000}, function(response){
+		chrome.extension.sendMessage({action: "display_message", message: 'It looks like you haven\'t selected a charity yet.  Click on the "Select a Charity" button in the options page.', type: "error", time: 4000}, function(response){
 			noty(response.formated_message);
 		});
 	}
@@ -37,7 +37,7 @@ function enable_remove() {
 	ad_number--;
     $(this).parent().parent().fadeOut().remove();
 	if (ad_number == 1) {
-	  chrome.extension.sendRequest({action: "blacklist_current_site", "url": url });
+	  chrome.extension.sendMessage({action: "blacklist_current_site", "url": url });
 	}
 	save_ad_positions();
   });
@@ -51,7 +51,7 @@ function save_ad_positions() {
     all_ad_positions.push(ad_position);
 	ad_number++;
   });
-  chrome.extension.sendRequest({action: "save_ad_positions", "positions": all_ad_positions, "url": url });
+  chrome.extension.sendMessage({action: "save_ad_positions", "positions": all_ad_positions, "url": url });
 }
 
 function create_ad() {
@@ -60,17 +60,17 @@ function create_ad() {
     enable_drag();
 	enable_remove();
   } else {
-	chrome.extension.sendRequest({action: "display_message", message: "Sorry, you can only place five advertisements on each website.", type: "alert", time: 2000}, function(response){
+	chrome.extension.sendMessage({action: "display_message", message: "Sorry, you can only place five advertisements on each website.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
     });
   }
-  chrome.extension.sendRequest({"action": "increase_charity_views","amount":1});
+  chrome.extension.sendMessage({"action": "increase_charity_views","amount":1});
 }
 
 function start_ad(top, right, bottom, left, no_save) {
 	if (ad_number > 6) return;
 	/*	//Debug code for ad_numbers and an example of using our noty helper functions for displaying messages
-	chrome.extension.sendRequest({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
+	chrome.extension.sendMessage({action: "display_message", message: "Add number " + ad_number + " has been created.", type: "alert", time: 2000}, function(response){
 		noty(response.formated_message);
 	});
 	*/
@@ -92,7 +92,7 @@ function startup() {
   ad_number=1;
   url = window.location.host;
   url.replace('www.','');
-  chrome.extension.sendRequest({action: "request_startup_info", "url": url });
+  chrome.extension.sendMessage({action: "request_startup_info", "url": url });
 }
 
 function remove_all_ads() {
@@ -140,7 +140,7 @@ function startup_ads(data){
 
   //End Functions and begin stuff loaded on page start
 
-chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
+chrome.extension.onMessage.addListener( function(request, sender, sendResponse){
   if(request.action == "create"){
     create_ad();
     sendResponse({});
@@ -161,7 +161,7 @@ chrome.extension.onRequest.addListener( function(request, sender, sendResponse){
 	sendResponse({});
   } else if(request.action == "revert_message" && tempLocalStorage["store.settings.revert_notification"] == "true"){
 	var ad_template_name = tempLocalStorage["store.settings.autoAds"].substr(1);
-	chrome.extension.sendRequest({action: "display_message", message: "Refresh this page to go back to the <i>" + ad_template_name.substr(0, ad_template_name.length-1) + "</i> template.", time:3000}, function(response){
+	chrome.extension.sendMessage({action: "display_message", message: "Refresh this page to go back to the <i>" + ad_template_name.substr(0, ad_template_name.length-1) + "</i> template.", time:3000}, function(response){
 		noty(response.formated_message);
 	});
     sendResponse({});
