@@ -3,7 +3,7 @@
       var d=document;var s=d.createElement('script');
       var x=d.getElementsByTagName('script')[0];
       s.type='text/javascript';s.async=true;
-      s.src='https://www.projectwonderful.com/pwa.js';
+      s.src='pwa.js';
       x.parentNode.insertBefore(s,x);}
    if (window.attachEvent){
     window.attachEvent('DOMContentLoaded',pw_load);

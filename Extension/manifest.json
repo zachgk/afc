@@ -1,6 +1,6 @@
 {
   "name": "Ads4Charity",
-  "version":"1.0.3",
+  "version":"1.1",
   "manifest_version": 2,
   "description":"Donate to Charities by Surfing the Web",
   "permissions": [
@@ -40,5 +40,5 @@
   "options_page": "fancy-settings/source/index.html",
   "offline_enabled": false,
   "web_accessible_resources": ["ads/63855.html","ads/63856.html","ads/63858.html","ads/63859.html","ads/63860.html"],
-  "content_security_policy": "script-src 'self' https://projectwonderful.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://projectwonderful.com https://www.projectwonderful.com; object-src 'self'"
 }
