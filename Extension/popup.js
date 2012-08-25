@@ -1,3 +1,11 @@
+  document.getElementById('create').onclick=function(){ create(); };
+  document.getElementById('blacklist').onclick=function(){blacklist(); };
+  document.getElementById('revert').onclick=function(){ revert(); reload(); };
+  document.getElementById('options').onclick=function(){options(); };
+
+
+
+
 function close_popup() {
 	chrome.tabs.getSelected(null, function(tab) {
 		chrome.tabs.update(tab.id, { selected: true } )
